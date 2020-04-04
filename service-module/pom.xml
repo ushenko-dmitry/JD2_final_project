@@ -26,7 +26,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>ru.mail.dimaushenko</groupId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.mail.dimaushenko.JD2_final_project</groupId>
             <artifactId>repository-module</artifactId>
             <version>${repository-module.version}</version>
         </dependency>

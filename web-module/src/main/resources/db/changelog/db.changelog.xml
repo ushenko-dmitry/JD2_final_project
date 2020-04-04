@@ -5,4 +5,77 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 	  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd"> 
 
+    <changeSet id="1" author="dushenko">
+        
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="varchar(50)" >
+                <constraints nullable="false" unique="true"/>
+            </column> 
+            <column name="password" type="varchar(60)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="enum('ADMINISTRATOR', 'SALE_USER', 'CUSTOMER_USER', 'SECURE_API_USER')" />
+        </createTable>
+        
+    </changeSet>
+    
+    <changeSet id="2" author="dushenko">
+        
+        <createTable tableName="user_details">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="true" 
+                             unique="true" 
+                             primaryKey="false" 
+                             references="user(id)" 
+                             foreignKeyName="FK_user_details_user" />
+            </column>
+            <column name="name" type="varchar(20)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="varchar(40)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="patronymic" type="varchar(40)" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+    
+    <changeSet id="3" author="dushenko">
+        
+        <createTable tableName="comment">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_details_id" type="int">
+                <constraints primaryKey="true" references="user_details(id)" foreignKeyName="FK_comment_user_details" />
+            </column>
+            <column name="comment" type="varchar(255)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="creation_date" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_visible" type="boolean" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+    
+    <changeSet id="4" author="dushenko">
+        <insert tableName="user">
+            <column name="email" value="admin@admin.com"/>
+            <column name="password" value="$2y$12$ZXU69.KDzo072nhyU4HxYOtxvSt1sRvCzmPnFSZmMKDG5S4Fmgebe"/>
+            <column name="role" value="ADMINISTRATOR"/>
+        </insert>
+    </changeSet>
+    
 </databaseChangeLog>

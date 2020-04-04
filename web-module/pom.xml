@@ -54,7 +54,7 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.mail.dimaushenko</groupId>
+            <groupId>ru.mail.dimaushenko.JD2_final_project</groupId>
             <artifactId>service-module</artifactId>
             <version>${service-module.version}</version>
         </dependency>
