@@ -1,14 +1,35 @@
 package ru.mail.dimaushenko.repository.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-public class Comment {
+@Entity
+@Table(name = "comment")
+public class Comment implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
+    @Column
     private String comment;
+    @Column(name = "creation_date")
     private Date creationDate;
-    private boolean isVisible;
+    @Column(name="is_visible")
+    private Boolean isVisible;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
@@ -35,11 +56,11 @@ public class Comment {
         this.creationDate = creationDate;
     }
 
-    public boolean isIsVisible() {
+    public Boolean isIsVisible() {
         return isVisible;
     }
 
-    public void setIsVisible(boolean isVisible) {
+    public void setIsVisible(Boolean isVisible) {
         this.isVisible = isVisible;
     }
 

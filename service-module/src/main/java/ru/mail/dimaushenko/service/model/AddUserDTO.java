@@ -5,22 +5,22 @@ import javax.validation.constraints.Size;
 
 public class AddUserDTO {
 
-    private Long id;
+    @NotNull
+    @Size(min = 1, max = 50)
     private String email;
     private String password;
+    @NotNull
+    @Size(min = 1, max = 20)
     private String name;
+    @NotNull
+    @Size(min = 1, max = 40)
     private String surname;
+    @NotNull
+    @Size(min = 1, max = 40)
     private String patronymic;
+    @NotNull
     private UserRoleEnumDTO role;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    
     public String getEmail() {
         return email;
     }

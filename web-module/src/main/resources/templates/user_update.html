@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Update user</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Update user</div>
+        <th:block th:if="${param.error}">
+            <p>Error with update user</p>
+        </th:block>
+        <form method="POST" th:action="@{/users/{id}/update(id=${user.id})}" th:object="${user}">
+            <p>Surname: <input type="text" name="surname" placeholder="Surname" th:field="*{userDetails.surname}" disabled="true"/></p>
+            <p>Name: <input type="text" name="name" placeholder="Name" th:field="*{userDetails.name}" disabled="true"/></p>
+            <p>Patronymic: <input type="text" name="patronymic" placeholder="Patronymic" th:field="*{userDetails.patronymic}" disabled="true"/></p>
+            <p>Email: <input type="email" name="email" placeholder="Email" th:field="*{email}" disabled="true"/></p>
+            <p>
+                <select name="role" th:field="*{role}">
+                    <option value="ADMINISTRATOR">Administrator</option>
+                    <option value="SALE_USER">Sale User</option>
+                    <option value="CUSTOMER_USER">Customer User</option>
+                    <option value="SECURE_API_USER">Secure API User</option>
+                </select>
+            </p>
+            <input type="submit" value="Update"/>
+        </form>
+        <form method="POST" th:action="@{/users/{id}/resetPassword(id=${user.id})}">
+            <input type="submit" value="Reset password"/>
+        </form>
+        <a href="/users" th:href="@{/users}">Back</a>
+    </body>
+</html>

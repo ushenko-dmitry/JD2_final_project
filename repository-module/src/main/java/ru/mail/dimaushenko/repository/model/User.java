@@ -1,5 +1,6 @@
 package ru.mail.dimaushenko.repository.model;
 
+import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;

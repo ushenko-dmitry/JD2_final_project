@@ -28,7 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/register").not().fullyAuthenticated()
+                    .antMatchers("/users").hasAnyRole(
+                            UserRoleEnumDTO.ADMINISTRATOR.name()
+                    )
                     .antMatchers("/users/add").hasAnyRole(
+                            UserRoleEnumDTO.ADMINISTRATOR.name()
+                    )
+                    .antMatchers("/comments").hasAnyRole(
                             UserRoleEnumDTO.ADMINISTRATOR.name()
                     )
                     .anyRequest().authenticated()

@@ -1,7 +1,6 @@
 package ru.mail.dimaushenko.service.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class UserDTO implements Serializable {
 
@@ -9,7 +8,7 @@ public class UserDTO implements Serializable {
     private String email;
     private String password;
     private UserRoleEnumDTO role;
-    private UserDetailsDTO userDetailsDTO;
+    private UserDetailsDTO userDetails;
 
     public Long getId() {
         return id;
@@ -43,12 +42,12 @@ public class UserDTO implements Serializable {
         this.role = role;
     }
 
-    public UserDetailsDTO getUserDetailsDTO() {
-        return userDetailsDTO;
+    public UserDetailsDTO getUserDetails() {
+        return userDetails;
     }
 
-    public void setUserDetailsDTO(UserDetailsDTO userDetailsDTO) {
-        this.userDetailsDTO = userDetailsDTO;
+    public void setUserDetails(UserDetailsDTO userDetails) {
+        this.userDetails = userDetails;
     }
 
 }

@@ -12,3 +12,4 @@ web-module/mvnw
 web-module/mvnw.cmd
 
 **/nb-configuration.xml
+/service-module/nbproject/

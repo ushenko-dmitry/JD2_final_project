@@ -25,13 +25,10 @@
     <changeSet id="2" author="dushenko">
         
         <createTable tableName="user_details">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
             <column name="user_id" type="int">
                 <constraints nullable="true" 
                              unique="true" 
-                             primaryKey="false" 
+                             primaryKey="true" 
                              references="user(id)" 
                              foreignKeyName="FK_user_details_user" />
             </column>
@@ -54,8 +51,8 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="user_details_id" type="int">
-                <constraints primaryKey="true" references="user_details(id)" foreignKeyName="FK_comment_user_details" />
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" references="user(id)" foreignKeyName="FK_comment_user" />
             </column>
             <column name="comment" type="varchar(255)" >
                 <constraints nullable="false"/>
@@ -73,7 +70,7 @@
     <changeSet id="4" author="dushenko">
         <insert tableName="user">
             <column name="email" value="admin@admin.com"/>
-            <column name="password" value="$2y$12$ZXU69.KDzo072nhyU4HxYOtxvSt1sRvCzmPnFSZmMKDG5S4Fmgebe"/>
+            <column name="password" value="$2y$12$ZXU69.KDzo072nhyU4HxYOtxvSt1sRvCzmPnFSZmMKDG5S4Fmgebe"/><!--pass: admin-->
             <column name="role" value="ADMINISTRATOR"/>
         </insert>
     </changeSet>

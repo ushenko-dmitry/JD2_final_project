@@ -25,10 +25,23 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- SECURITY -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <!-- MAIL -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <!-- REPOSITORY -->
         <dependency>
             <groupId>ru.mail.dimaushenko.JD2_final_project</groupId>
             <artifactId>repository-module</artifactId>

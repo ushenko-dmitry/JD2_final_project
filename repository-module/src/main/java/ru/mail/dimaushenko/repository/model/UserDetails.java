@@ -1,12 +1,12 @@
 package ru.mail.dimaushenko.repository.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -16,12 +16,9 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "user_details")
-class UserDetails {
+public class UserDetails implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
-    private Long id;
     @GenericGenerator(
             name = "generator",
             parameters = @Parameter(
@@ -34,7 +31,7 @@ class UserDetails {
     @Column(
             name = "user_id",
             unique = true,
-            nullable = true
+            nullable = false
     )
     private Long userId;
     @Column
@@ -46,14 +43,6 @@ class UserDetails {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private User user;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
@@ -98,7 +87,6 @@ class UserDetails {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
         hash = 89 * hash + Objects.hashCode(this.userId);
         hash = 89 * hash + Objects.hashCode(this.name);
         hash = 89 * hash + Objects.hashCode(this.surname);
@@ -126,9 +114,6 @@ class UserDetails {
             return false;
         }
         if (!Objects.equals(this.patronymic, other.patronymic)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.userId, other.userId)) {

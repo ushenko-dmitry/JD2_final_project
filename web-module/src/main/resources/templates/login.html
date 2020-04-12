@@ -14,10 +14,9 @@
             <p>You are logout</p>
         </th:block>
         <form method="POST" th:action="@{/login}">
-            <span>Email: <input type="text" name="username"/></span><br/>
+            <span>Email: <input type="email" name="username"/></span><br/>
             <span>Password: <input type="password" name="password"/></span><br/>
             <input type="submit" value="Log In"/>
         </form>
-        <!--<a href="/register" th:href="@{/register}">Register</a>-->
     </body>
 </html>

@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.repository.model;
+package ru.mail.dimaushenko.repository.constants;
 
 public enum UserRoleEnum {
 

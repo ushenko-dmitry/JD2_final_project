@@ -3,6 +3,7 @@ package ru.mail.dimaushenko.repository.impl;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import ru.mail.dimaushenko.repository.GenericRepository;
@@ -45,6 +46,19 @@ public abstract class GenericRepositoryImpl<I, T> implements GenericRepository<I
         String queryString = "from " + entityClass.getName() + " c";
         Query query = entityManager.createQuery(queryString);
         return query.getResultList();
+    }
+
+    @Override
+    public Integer getAmountElements() {
+        String queryString = "SELECT count(id) FROM " + entityClass.getName() + " c";
+        Query query = entityManager.createQuery(queryString);
+        try {
+            Long count = (Long) query.getSingleResult();
+            return count.intValue();
+        } catch (NoResultException noResultException) {
+            return 0;
+        }
+
     }
 
 }
