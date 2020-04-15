@@ -28,8 +28,10 @@ public class UserRepositoryImpl extends GenericRepositoryImpl<Long, User> implem
         switch(sort){
             case ASC:
                 queryString += " asc";
+                break;
             case DESC:
                 queryString += " desc";
+                break;
         }
         Query query = entityManager.createQuery(queryString);
         query.setFirstResult(pagination.getStartElement());
