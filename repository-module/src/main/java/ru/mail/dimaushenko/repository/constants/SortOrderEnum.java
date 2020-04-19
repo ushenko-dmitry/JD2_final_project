@@ -1,6 +1,6 @@
 package ru.mail.dimaushenko.repository.constants;
 
-public enum Sort {
+public enum SortOrderEnum {
 
     ASC,
     DESC;

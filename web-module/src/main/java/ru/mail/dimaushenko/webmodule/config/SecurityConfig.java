@@ -1,4 +1,5 @@
 package ru.mail.dimaushenko.webmodule.config;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,28 +28,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/register").not().fullyAuthenticated()
-                    .antMatchers("/users").hasAnyRole(
-                            UserRoleEnumDTO.ADMINISTRATOR.name()
-                    )
-                    .antMatchers("/users/add").hasAnyRole(
-                            UserRoleEnumDTO.ADMINISTRATOR.name()
-                    )
-                    .antMatchers("/comments").hasAnyRole(
-                            UserRoleEnumDTO.ADMINISTRATOR.name()
-                    )
-                    .anyRequest().authenticated()
-                    .and()
+                .antMatchers("/users").hasAnyRole(UserRoleEnumDTO.ADMINISTRATOR.name())
+                .antMatchers("/users/add").hasAnyRole(UserRoleEnumDTO.ADMINISTRATOR.name())
+                .antMatchers("/comments").hasAnyRole(UserRoleEnumDTO.ADMINISTRATOR.name())
+                .antMatchers("/comments/*/delete").hasAnyRole(UserRoleEnumDTO.ADMINISTRATOR.name())
+                .antMatchers("/profile").hasAnyRole(UserRoleEnumDTO.CUSTOMER_USER.name())
+                .antMatchers("/articles").hasAnyRole(UserRoleEnumDTO.CUSTOMER_USER.name())
+                .antMatchers("/api/users").hasAnyRole(UserRoleEnumDTO.SECURE_API_USER.name())
+                .antMatchers("/api/articles").hasAnyRole(UserRoleEnumDTO.SECURE_API_USER.name())
+                .antMatchers("/api/articles/**").hasAnyRole(UserRoleEnumDTO.SECURE_API_USER.name())
+                .anyRequest().authenticated()
+                .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/")
-                    .permitAll()
-                    .and()
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll()
+                .and()
                 .logout()
-                    .permitAll()
-                    .and()
+                .permitAll()
+                .and()
                 .csrf()
-                    .disable();
+                .disable();
     }
 
     @Override

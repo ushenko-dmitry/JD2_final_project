@@ -16,6 +16,8 @@ public class UserDetailsConverterImpl implements UserDetailsConverter {
         userDetailsDTO.setName(userDetails.getName());
         userDetailsDTO.setSurname(userDetails.getSurname());
         userDetailsDTO.setPatronymic(userDetails.getPatronymic());
+        userDetailsDTO.setAddress(userDetails.getAddress());
+        userDetailsDTO.setPhone(userDetails.getPhone());
         return userDetailsDTO;
     }
 
@@ -31,6 +33,8 @@ public class UserDetailsConverterImpl implements UserDetailsConverter {
         userDetails.setName(userDetailsDTO.getName());
         userDetails.setSurname(userDetailsDTO.getSurname());
         userDetails.setPatronymic(userDetailsDTO.getPatronymic());
+        userDetails.setAddress(userDetailsDTO.getAddress());
+        userDetails.setPhone(userDetailsDTO.getPhone());
         return userDetails;
     }
 

@@ -1,6 +1,5 @@
 package ru.mail.dimaushenko.repository.model;
 
-import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -14,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 
 @Entity
 @Table(name="user")

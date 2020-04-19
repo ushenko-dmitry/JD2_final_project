@@ -5,7 +5,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import ru.mail.dimaushenko.repository.UserRepository;
-import ru.mail.dimaushenko.repository.constants.Sort;
+import ru.mail.dimaushenko.repository.constants.SortOrderEnum;
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.repository.model.User;
@@ -23,7 +23,7 @@ public class UserRepositoryImpl extends GenericRepositoryImpl<Long, User> implem
     }
 
     @Override
-    public List<User> getUsersSortByEmail(Pagination pagination, Sort sort) {
+    public List<User> getUsersSortByEmail(Pagination pagination, SortOrderEnum sort) {
         String queryString = "FROM User u ORDER BY u.email";
         switch(sort){
             case ASC:

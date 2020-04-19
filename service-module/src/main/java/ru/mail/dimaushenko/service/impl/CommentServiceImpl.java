@@ -42,6 +42,7 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(Long id) {
         Comment comment = commentRepository.findById(id);
         comment.setUser(null);
+        comment.setArticle(null);
         commentRepository.remove(comment);
     }
 

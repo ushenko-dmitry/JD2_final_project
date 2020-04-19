@@ -52,7 +52,9 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="user_id" type="int">
-                <constraints primaryKey="true" references="user(id)" foreignKeyName="FK_comment_user" />
+                <constraints primaryKey="true" 
+                             references="user(id)" 
+                             foreignKeyName="FK_comment_user" />
             </column>
             <column name="comment" type="varchar(255)" >
                 <constraints nullable="false"/>
@@ -72,6 +74,61 @@
             <column name="email" value="admin@admin.com"/>
             <column name="password" value="$2y$12$ZXU69.KDzo072nhyU4HxYOtxvSt1sRvCzmPnFSZmMKDG5S4Fmgebe"/><!--pass: admin-->
             <column name="role" value="ADMINISTRATOR"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="dushenko">
+        <addColumn tableName="user_details">
+            <column name="address" type="varchar(255)"/>
+            <column name="phone" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="6" author="dushenko">
+        <createTable tableName="article">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" 
+                             references="user(id)" 
+                             foreignKeyName="FK_article_user" />
+            </column>
+            <column name="title" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="7" author="dushenko">
+        <addColumn tableName="article">
+            <column name="content" type="varchar(1000)"/>
+        </addColumn>
+        <modifyDataType columnName="title"
+                        newDataType="varchar(255)"
+                        tableName="article"/>
+    </changeSet>
+    
+    <changeSet id="8" author="dushenko">
+        <addColumn tableName="comment">
+            <column name="article_id" type="int">
+                <constraints references="article(id)" 
+                             foreignKeyName="FK_comment_article" />
+            </column>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="9" author="dushenko">
+        <insert tableName="user_details">
+            <column name="user_id" value="1"/>
+            <column name="name" value="admin"/>
+            <column name="surname" value=""/>
+            <column name="patronymic" value=""/>
+            <column name="address" value=""/>
+            <column name="phone" value=""/>
         </insert>
     </changeSet>
     

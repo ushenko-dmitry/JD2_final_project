@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Profile</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div>Profile</div>
+        <div>
+            <form method="POST" th:action="@{/profile/edit}" th:object="${user_profile}">                
+                <p>Name: 
+                        <input type="text" placeholder="Name" th:value="*{name}" th:field="*{name}"/>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">pass error</span>
+                </p>
+                <p>Surname: 
+                        <input type="text" placeholder="Surname" th:value="*{surname}"  th:field="*{surname}"/>
+                        <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">pass error</span>
+                </p>
+                <p>Address: 
+                        <input type="text"  placeholder="Address" th:value="*{address}"  th:field="*{address}"/>
+                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">pass error</span>
+                </p>
+                <p>Phone: 
+                        <input type="text" placeholder="Phone" th:value="*{phone}"  th:field="*{phone}"/>
+                        <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">pass error</span>
+                </p>
+                <input type="hidden" th:field="*{id}"/>
+                <input type="submit" value="Save"/>
+            </form>
+            <form method="POST" th:action="@{/profile/change_password}" th:object="${new_password}">
+                <p>Password: 
+                    <input type="text" placeholder="Password" th:field="*{password}"/>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">pass error</span>
+                </p>
+                <p>Confirm password: 
+                    <input type="text" placeholder="Confirm password" th:field="*{passwordConfirm}"/>
+                    <span th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">pass error</span>
+                </p>
+                <input type="hidden" th:field="*{id}"/>
+                <input type="submit" value="Change password"/>
+            </form>
+        </div>
+        <p><a href="/profile" th:href="@{/profile}">Back</a></p>
+    </body>
+</html>

@@ -40,6 +40,10 @@ public class UserDetails implements Serializable {
     private String surname;
     @Column
     private String patronymic;
+    @Column
+    private String address;
+    @Column
+    private String phone;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private User user;
@@ -76,6 +80,22 @@ public class UserDetails implements Serializable {
         this.patronymic = patronymic;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public User getUser() {
         return user;
     }
@@ -91,6 +111,8 @@ public class UserDetails implements Serializable {
         hash = 89 * hash + Objects.hashCode(this.name);
         hash = 89 * hash + Objects.hashCode(this.surname);
         hash = 89 * hash + Objects.hashCode(this.patronymic);
+        hash = 89 * hash + Objects.hashCode(this.address);
+        hash = 89 * hash + Objects.hashCode(this.phone);
         hash = 89 * hash + Objects.hashCode(this.user);
         return hash;
     }
@@ -114,6 +136,12 @@ public class UserDetails implements Serializable {
             return false;
         }
         if (!Objects.equals(this.patronymic, other.patronymic)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
             return false;
         }
         if (!Objects.equals(this.userId, other.userId)) {

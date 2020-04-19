@@ -1,11 +1,13 @@
 package ru.mail.dimaushenko.service.converter.impl;
 
 import org.springframework.stereotype.Component;
+import ru.mail.dimaushenko.service.converter.ArticleConverter;
 import ru.mail.dimaushenko.service.converter.CommentConverter;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
 import ru.mail.dimaushenko.service.converter.UserConverter;
 import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
+import ru.mail.dimaushenko.service.converter.UserProfileConverter;
 import ru.mail.dimaushenko.service.converter.UserRoleConverter;
 
 @Component
@@ -16,19 +18,25 @@ public class ConverterFacadeImpl implements ConverterFacade {
     private final UserDetailsConverter userDetailsConverter;
     private final UserRoleConverter userRoleConverter;
     private final PaginationConverter paginationConverter;
+    private final UserProfileConverter userProfileConverter;
+    private final ArticleConverter articleConverter;
 
     public ConverterFacadeImpl(
             UserConverter userConverter,
             CommentConverter commentConverter,
             UserDetailsConverter userDetailsConverter,
             UserRoleConverter userRoleConverter,
-            PaginationConverter paginationConverter
+            PaginationConverter paginationConverter,
+            UserProfileConverter userProfileConverter,
+            ArticleConverter articleConverter
     ) {
         this.userConverter = userConverter;
         this.commentConverter = commentConverter;
         this.userDetailsConverter = userDetailsConverter;
         this.userRoleConverter = userRoleConverter;
         this.paginationConverter = paginationConverter;
+        this.userProfileConverter = userProfileConverter;
+        this.articleConverter = articleConverter;
     }
 
     @Override
@@ -54,6 +62,16 @@ public class ConverterFacadeImpl implements ConverterFacade {
     @Override
     public PaginationConverter getPaginationConverter() {
         return paginationConverter;
+    }
+
+    @Override
+    public UserProfileConverter getUserProfileConverter() {
+        return userProfileConverter;
+    }
+
+    @Override
+    public ArticleConverter getArticleConverter() {
+        return articleConverter;
     }
 
 }

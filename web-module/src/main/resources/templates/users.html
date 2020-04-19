@@ -4,7 +4,7 @@
         <title>Users</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>Пользователи</div>
@@ -31,9 +31,6 @@
         </table>
 
         <form method="POST" th:action="@{/users/delete}">
-            <!--            <th:block th:each="user : ${viewUsers.users}">
-                            <input type="hidden" name="deleteCheckbox" th:value="${user.id}"/>
-                        </th:block>-->
             <div id="delete_inputs">
 
             </div>
@@ -48,5 +45,5 @@
 
         <a href="/users/add" th:href="@{/users/add}">Add User</a>
     </body>
-    <script th:src="@{/user_delete.js}"></script>
+    <script th:src="@{/js/user_delete.js}"></script>
 </html>

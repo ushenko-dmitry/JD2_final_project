@@ -2,12 +2,11 @@ package ru.mail.dimaushenko.service.converter.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.repository.model.UserDetails;
-import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
-import static ru.mail.dimaushenko.service.constants.PasswordConstants.SALT;
 import ru.mail.dimaushenko.service.converter.UserConverter;
 import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
 import ru.mail.dimaushenko.service.converter.UserRoleConverter;
@@ -21,13 +20,16 @@ public class UserConverterImpl implements UserConverter {
 
     private final UserDetailsConverter userDetailsConverter;
     private final UserRoleConverter userRoleConverter;
+    private final PasswordEncoder passwordEncoder;
 
     public UserConverterImpl(
             UserDetailsConverter userDetailsConverter,
-            UserRoleConverter userRoleConverter
+            UserRoleConverter userRoleConverter,
+            PasswordEncoder passwordEncoder
     ) {
         this.userDetailsConverter = userDetailsConverter;
         this.userRoleConverter = userRoleConverter;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class UserConverterImpl implements UserConverter {
         userDTO.setPassword(user.getPassword());
         if (user.getUserDetails() != null) {
             UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(user.getUserDetails());
-            userDetailsDTO.setUserDTO(userDTO);
+//            userDetailsDTO.setUserDTO(userDTO);
             userDTO.setUserDetails(userDetailsDTO);
         }
 
@@ -63,7 +65,7 @@ public class UserConverterImpl implements UserConverter {
         user.setId(userDTO.getId());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
-        if (user.getUserDetails() != null) {
+        if (userDTO.getUserDetails() != null) {
             UserDetails userDetails = userDetailsConverter.getObjectFromDTO(userDTO.getUserDetails());
             userDetails.setUser(user);
             user.setUserDetails(userDetails);
@@ -79,8 +81,7 @@ public class UserConverterImpl implements UserConverter {
         User user = new User();
         user.setEmail(userDTO.getEmail());
 
-        user.setPassword(BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt(SALT)));
-
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         UserRoleEnum role = userRoleConverter.getObjectFromDTO(userDTO.getRole());
         user.setRole(role);
 

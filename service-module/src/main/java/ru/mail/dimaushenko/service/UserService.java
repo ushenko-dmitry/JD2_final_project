@@ -5,11 +5,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.mail.dimaushenko.service.model.AddUserDTO;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
+import ru.mail.dimaushenko.service.model.UserPasswordDTO;
+import ru.mail.dimaushenko.service.model.UserProfileDTO;
 import ru.mail.dimaushenko.service.model.UserRoleEnumDTO;
 
 public interface UserService extends UserDetailsService {
 
-    void addUser(AddUserDTO addUser);
+    UserDTO addUser(AddUserDTO addUser);
 
     UserDTO getUserByEmail(String username);
 
@@ -28,5 +30,11 @@ public interface UserService extends UserDetailsService {
     boolean resetPassword(Long id);
 
     boolean updateUserRole(UserDTO user);
+
+    boolean updateUserPassword(UserPasswordDTO userPasswordDTO);
+
+    boolean updateUserDetails(UserProfileDTO user);
+
+    UserProfileDTO getUserProfile(String username);
 
 }
