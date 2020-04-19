@@ -35,6 +35,13 @@ public class UserDetailsConverterImplTest {
         assertThat(userDetailsDTO).isEqualTo(returnUserDetailsDTO);
     }
 
+    @Test
+    public void testGetDTOFromObject_NULL_Input() {
+        UserDetails userDetails = null;
+        UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(userDetails);
+        assertThat(userDetailsDTO).isNull();
+    }
+
     @Test(expected = UnsupportedOperationException.class)
     public void testGetDTOFromObject_List() {
         List<UserDetails> userDetailses = new ArrayList<>();
@@ -47,6 +54,13 @@ public class UserDetailsConverterImplTest {
         UserDetails returnUserDetails = setupUserDetails(userDetailsDTO);
         UserDetails userDetails = userDetailsConverter.getObjectFromDTO(userDetailsDTO);
         assertThat(userDetails).isEqualTo(returnUserDetails);
+    }
+
+    @Test
+    public void testGetObjectFromDTO_NULL_Input() {
+        UserDetailsDTO userDetailsDTO = null;
+        UserDetails userDetails = userDetailsConverter.getObjectFromDTO(userDetailsDTO);
+        assertThat(userDetails).isNull();
     }
 
     @Test(expected = UnsupportedOperationException.class)
