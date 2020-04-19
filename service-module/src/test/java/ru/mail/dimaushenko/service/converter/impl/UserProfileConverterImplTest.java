@@ -40,10 +40,27 @@ public class UserProfileConverterImplTest {
     }
 
     @Test
-    public void testGetDTOFromObject_User() {
+    public void testGetDTOFromObject_User_Input() {
         User user = setupValidUser();
         UserProfileDTO returnUserProfileDTO = setupValidUserProfileDTO(user);
         UserDetailsDTO userDetailsDTO = setupUserDetails(user.getUserDetails());
+        when(userDetailsConverter.getDTOFromObject(user.getUserDetails())).thenReturn(userDetailsDTO);
+        UserProfileDTO userProfileDTO = userProfileConverter.getDTOFromObject(user);
+        assertThat(userProfileDTO).isEqualTo(returnUserProfileDTO);
+    }
+
+    @Test
+    public void testGetDTOFromObject_NULL_Input() {
+        User user = null;
+        UserProfileDTO userProfileDTO = userProfileConverter.getDTOFromObject(user);
+        assertThat(userProfileDTO).isNull();
+    }
+
+    @Test
+    public void testGetDTOFromObject_UserWithNullUserDetails_Input() {
+        User user = setupUserWithNullUserDetails();
+        UserProfileDTO returnUserProfileDTO = setupUserProfileWithNullUserDetailsDTO(user);
+        UserDetailsDTO userDetailsDTO = null;
         when(userDetailsConverter.getDTOFromObject(user.getUserDetails())).thenReturn(userDetailsDTO);
         UserProfileDTO userProfileDTO = userProfileConverter.getDTOFromObject(user);
         assertThat(userProfileDTO).isEqualTo(returnUserProfileDTO);
@@ -103,6 +120,27 @@ public class UserProfileConverterImplTest {
         profileDTO.setSurname(userDetails.getSurname());
         profileDTO.setAddress(userDetails.getAddress());
         profileDTO.setPhone(userDetails.getPhone());
+        return profileDTO;
+    }
+
+    private User setupUserWithNullUserDetails() {
+        User user = new User();
+        user.setId(ID);
+        user.setEmail(EMAIL);
+        user.setPassword(PASSWORD);
+        user.setRole(UserRoleEnum.SALE_USER);
+        UserDetails userDetails = null;
+        user.setUserDetails(userDetails);
+        return user;
+    }
+
+    private UserProfileDTO setupUserProfileWithNullUserDetailsDTO(User user) {
+        UserProfileDTO profileDTO = new UserProfileDTO();
+        profileDTO.setId(user.getId());
+        profileDTO.setName(null);
+        profileDTO.setSurname(null);
+        profileDTO.setAddress(null);
+        profileDTO.setPhone(null);
         return profileDTO;
     }
 

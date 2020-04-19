@@ -20,15 +20,20 @@ public class UserProfileConverterImpl implements UserProfileConverter {
 
     @Override
     public UserProfileDTO getDTOFromObject(User user) {
-        UserProfileDTO profileDTO = new UserProfileDTO();
-        profileDTO.setId(user.getId());
-        UserDetails userDetails = user.getUserDetails();
-        UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(userDetails);
-        profileDTO.setName(userDetailsDTO.getName());
-        profileDTO.setSurname(userDetailsDTO.getSurname());
-        profileDTO.setAddress(userDetailsDTO.getAddress());
-        profileDTO.setPhone(userDetailsDTO.getPhone());
-        return profileDTO;
+        if (user != null) {
+            UserProfileDTO profileDTO = new UserProfileDTO();
+            profileDTO.setId(user.getId());
+            UserDetails userDetails = user.getUserDetails();
+            UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(userDetails);
+            if (userDetailsDTO != null) {
+                profileDTO.setName(userDetailsDTO.getName());
+                profileDTO.setSurname(userDetailsDTO.getSurname());
+                profileDTO.setAddress(userDetailsDTO.getAddress());
+                profileDTO.setPhone(userDetailsDTO.getPhone());
+            }
+            return profileDTO;
+        }
+        return null;
     }
 
     @Override
