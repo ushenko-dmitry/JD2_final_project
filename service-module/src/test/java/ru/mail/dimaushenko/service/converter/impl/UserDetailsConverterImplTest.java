@@ -10,27 +10,25 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.model.UserDetails;
 import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
 import ru.mail.dimaushenko.service.model.UserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetails;
+import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetails;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDetailsConverterImplTest {
 
-    private static final long ID = 1L;
-    private static final String PHONE = "Phone";
-    private static final String ADDRESS = "Address";
-    private static final String PATRONYMIC = "Patronymic";
-    private static final String SURNAME = "Surname";
-    private static final String NAME = "Name";
-
-    private UserDetailsConverter userDetailsConverter = new UserDetailsConverterImpl();
+    private UserDetailsConverter userDetailsConverter;
 
     @Before
     public void setUp() {
+        userDetailsConverter = new UserDetailsConverterImpl();
     }
 
     @Test
     public void testGetDTOFromObject_UserDetails_Input() {
-        UserDetails userDetails = setupUserDetails();
-        UserDetailsDTO returnUserDetailsDTO = setupUserDetailsDTO(userDetails);
+        UserDetails userDetails = getValidUserDetails();
+        UserDetailsDTO returnUserDetailsDTO = getUserDetailsDTO(userDetails);
         UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(userDetails);
         assertThat(userDetailsDTO).isEqualTo(returnUserDetailsDTO);
     }
@@ -50,8 +48,8 @@ public class UserDetailsConverterImplTest {
 
     @Test
     public void testGetObjectFromDTO_UserDetailsDTO_Input() {
-        UserDetailsDTO userDetailsDTO = setupUserDetailsDTO();
-        UserDetails returnUserDetails = setupUserDetails(userDetailsDTO);
+        UserDetailsDTO userDetailsDTO = getValidUserDetailsDTO();
+        UserDetails returnUserDetails = getUserDetails(userDetailsDTO);
         UserDetails userDetails = userDetailsConverter.getObjectFromDTO(userDetailsDTO);
         assertThat(userDetails).isEqualTo(returnUserDetails);
     }
@@ -67,50 +65,6 @@ public class UserDetailsConverterImplTest {
     public void testGetObjectFromDTO_List() {
         List<UserDetailsDTO> userDetailsDTOs = new ArrayList<>();
         userDetailsConverter.getObjectFromDTO(userDetailsDTOs);
-    }
-
-    private UserDetails setupUserDetails() {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setName(NAME);
-        userDetails.setSurname(SURNAME);
-        userDetails.setPatronymic(PATRONYMIC);
-        userDetails.setAddress(ADDRESS);
-        userDetails.setPhone(PHONE);
-        userDetails.setUserId(ID);
-        return userDetails;
-    }
-
-    private UserDetailsDTO setupUserDetailsDTO(UserDetails userDetails) {
-        UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
-        userDetailsDTO.setName(userDetails.getName());
-        userDetailsDTO.setSurname(userDetails.getSurname());
-        userDetailsDTO.setPatronymic(userDetails.getPatronymic());
-        userDetailsDTO.setAddress(userDetails.getAddress());
-        userDetailsDTO.setPhone(userDetails.getPhone());
-        userDetailsDTO.setUserId(userDetails.getUserId());
-        return userDetailsDTO;
-    }
-
-    private UserDetails setupUserDetails(UserDetailsDTO userDetailsDTO) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setName(userDetailsDTO.getName());
-        userDetails.setSurname(userDetailsDTO.getSurname());
-        userDetails.setPatronymic(userDetailsDTO.getPatronymic());
-        userDetails.setAddress(userDetailsDTO.getAddress());
-        userDetails.setPhone(userDetailsDTO.getPhone());
-        userDetails.setUserId(userDetailsDTO.getUserId());
-        return userDetails;
-    }
-
-    private UserDetailsDTO setupUserDetailsDTO() {
-        UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
-        userDetailsDTO.setName(NAME);
-        userDetailsDTO.setSurname(SURNAME);
-        userDetailsDTO.setPatronymic(PATRONYMIC);
-        userDetailsDTO.setAddress(ADDRESS);
-        userDetailsDTO.setPhone(PHONE);
-        userDetailsDTO.setUserId(ID);
-        return userDetailsDTO;
     }
 
 }

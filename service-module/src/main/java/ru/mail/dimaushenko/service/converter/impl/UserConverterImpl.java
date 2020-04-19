@@ -40,7 +40,6 @@ public class UserConverterImpl implements UserConverter {
         userDTO.setPassword(user.getPassword());
         if (user.getUserDetails() != null) {
             UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(user.getUserDetails());
-//            userDetailsDTO.setUserDTO(userDTO);
             userDTO.setUserDetails(userDetailsDTO);
         }
 
