@@ -131,5 +131,27 @@
             <column name="phone" value=""/>
         </insert>
     </changeSet>
+
+    <changeSet id="10" author="dushenko">
+        <dropForeignKeyConstraint baseTableName="comment"
+                                  constraintName="FK_comment_user"/>
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="user_id" 
+                                 constraintName="FK_comment_user"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+    </changeSet>
+
+    <changeSet id="11" author="dushenko">
+        <dropForeignKeyConstraint baseTableName="comment"
+                                  constraintName="FK_comment_article"/>
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="article_id" 
+                                 constraintName="FK_comment_article"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article"/>
+    </changeSet>
     
 </databaseChangeLog>
