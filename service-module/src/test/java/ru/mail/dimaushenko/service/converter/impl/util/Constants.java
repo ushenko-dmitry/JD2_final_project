@@ -7,6 +7,7 @@ public interface Constants {
 
     long USER_ID = 1L;
     String USER_PASSWORD = "password";
+    String ENCODE_PASSWORD = "encode_password";
     String USER_EMAIL = "email";
     UserRoleEnumDTO USER_DTO_ROLE = UserRoleEnumDTO.SALE_USER;
     UserRoleEnum USER_ROLE = UserRoleEnum.SALE_USER;
