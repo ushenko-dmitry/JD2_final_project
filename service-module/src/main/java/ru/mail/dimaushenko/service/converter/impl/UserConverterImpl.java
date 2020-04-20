@@ -34,18 +34,21 @@ public class UserConverterImpl implements UserConverter {
 
     @Override
     public UserDTO getDTOFromObject(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-        if (user.getUserDetails() != null) {
-            UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(user.getUserDetails());
-            userDTO.setUserDetails(userDetailsDTO);
-        }
+        if (user != null) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setEmail(user.getEmail());
+            userDTO.setPassword(user.getPassword());
+            if (user.getUserDetails() != null) {
+                UserDetailsDTO userDetailsDTO = userDetailsConverter.getDTOFromObject(user.getUserDetails());
+                userDTO.setUserDetails(userDetailsDTO);
+            }
 
-        UserRoleEnumDTO role = userRoleConverter.getDTOFromObject(user.getRole());
-        userDTO.setRole(role);
-        return userDTO;
+            UserRoleEnumDTO role = userRoleConverter.getDTOFromObject(user.getRole());
+            userDTO.setRole(role);
+            return userDTO;
+        }
+        return null;
     }
 
     @Override
@@ -60,19 +63,22 @@ public class UserConverterImpl implements UserConverter {
 
     @Override
     public User getObjectFromDTO(UserDTO userDTO) {
-        User user = new User();
-        user.setId(userDTO.getId());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        if (userDTO.getUserDetails() != null) {
-            UserDetails userDetails = userDetailsConverter.getObjectFromDTO(userDTO.getUserDetails());
-            userDetails.setUser(user);
-            user.setUserDetails(userDetails);
-        }
+        if (userDTO != null) {
+            User user = new User();
+            user.setId(userDTO.getId());
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(userDTO.getPassword());
+            if (userDTO.getUserDetails() != null) {
+                UserDetails userDetails = userDetailsConverter.getObjectFromDTO(userDTO.getUserDetails());
+                userDetails.setUser(user);
+                user.setUserDetails(userDetails);
+            }
 
-        UserRoleEnum role = userRoleConverter.getObjectFromDTO(userDTO.getRole());
-        user.setRole(role);
-        return user;
+            UserRoleEnum role = userRoleConverter.getObjectFromDTO(userDTO.getRole());
+            user.setRole(role);
+            return user;
+        }
+        return null;
     }
 
     @Override

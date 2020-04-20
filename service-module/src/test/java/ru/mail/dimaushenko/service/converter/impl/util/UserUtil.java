@@ -26,6 +26,17 @@ public class UserUtil {
         return user;
     }
 
+    public static User getValidUser(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(USER_ROLE);
+        UserDetails userDetails = getValidUserDetails();
+        user.setUserDetails(userDetails);
+        return user;
+    }
+
     public static User getUserWithNullUserDetails() {
         User user = new User();
         user.setId(USER_ID);
@@ -35,6 +46,17 @@ public class UserUtil {
         UserDetails userDetails = null;
         user.setUserDetails(userDetails);
         return user;
+    }
+
+    public static UserDTO getValidUserDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(USER_ID);
+        userDTO.setEmail(USER_EMAIL);
+        userDTO.setPassword(USER_PASSWORD);
+        userDTO.setRole(USER_DTO_ROLE);
+        UserDetailsDTO userDetailsDTO = getValidUserDetailsDTO();
+        userDTO.setUserDetails(userDetailsDTO);
+        return userDTO;
     }
 
     public static UserDTO getValidUserDTO(User user) {
@@ -53,6 +75,17 @@ public class UserUtil {
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
+        userDTO.setRole(USER_DTO_ROLE);
+        UserDetailsDTO userDetailsDTO = null;
+        userDTO.setUserDetails(userDetailsDTO);
+        return userDTO;
+    }
+
+    public static UserDTO getUserDTOWithNullUserDetails() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(USER_ID);
+        userDTO.setEmail(USER_EMAIL);
+        userDTO.setPassword(USER_PASSWORD);
         userDTO.setRole(USER_DTO_ROLE);
         UserDetailsDTO userDetailsDTO = null;
         userDTO.setUserDetails(userDetailsDTO);

@@ -113,7 +113,6 @@ public class UserDetails implements Serializable {
         hash = 89 * hash + Objects.hashCode(this.patronymic);
         hash = 89 * hash + Objects.hashCode(this.address);
         hash = 89 * hash + Objects.hashCode(this.phone);
-        hash = 89 * hash + Objects.hashCode(this.user);
         return hash;
     }
 
@@ -145,9 +144,6 @@ public class UserDetails implements Serializable {
             return false;
         }
         if (!Objects.equals(this.userId, other.userId)) {
-            return false;
-        }
-        if (!Objects.equals(this.user, other.user)) {
             return false;
         }
         return true;
