@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Users</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    </head>
+    <body>
+        <div>Пользователи</div>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Full name</td>
+                    <td>Email</td>
+                    <td>Role</td>
+                    <td>Edit</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${viewUsers.users}">
+                    <td><input th:id="'delete_checkbox_' + ${user.id}" name="delete_checkbox" type="checkbox"/></td>
+                    <td><span th:if="${user.userDetails}" th:text="${user.userDetails.surname + ' ' + user.userDetails.name+ ' ' + user.userDetails.patronymic}">Фамилия Имя Отчество</span></td>
+                    <td th:text="${user.email}">email@email.com</td>
+                    <td th:text="${user.role}">role</td>
+                    <td><a th:href="@{/users/{id}/update(id=${user.id})}">Edit</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form method="POST" th:action="@{/users/delete}">
+            <!--            <th:block th:each="user : ${viewUsers.users}">
+                            <input type="hidden" name="deleteCheckbox" th:value="${user.id}"/>
+                        </th:block>-->
+            <div id="delete_inputs">
+
+            </div>
+            <input type="submit" value="delete"/>
+        </form>
+
+        <div th:if="${#lists.size(viewUsers.pagination.pageNumbers)} > 1">
+            <ul th:each="pageNumber : ${viewUsers.pagination.pageNumbers}">
+                <li><a th:href="@{/users(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewUsers.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
+            </ul>
+        </div>
+
+        <a href="/users/add" th:href="@{/users/add}">Add User</a>
+    </body>
+    <script th:src="@{/user_delete.js}"></script>
+</html>

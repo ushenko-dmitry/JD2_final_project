@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Comments</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Comments</div>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Full name</td>
+                    <td>Comment</td>
+                    <td>Date</td>
+                    <td>View</td>
+                    <td>Remove</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comment : ${viewComments.comments}">
+                    <td><span th:if="${comment.user.userDetails}" th:text="${comment.user.userDetails.surname + ' ' + comment.user.userDetails.name+ ' ' + comment.user.userDetails.patronymic}">Full name</span></td>
+                    <td th:text="${comment.comment}">Comment</td>
+                    <td th:text="${comment.creationDate}">Date</td>
+                    <td style="text-align: center"><input type="checkbox" th:checked="${comment.isVisible}" disabled=""/></td>
+                    <td>
+                        <form method="POST" th:action="@{/comments/{id}/delete(id=${comment.id})}">
+                            <input type="submit" value="remove"/>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.size(viewComments.pagination.pageNumbers)} > 1">
+            <ul th:each="pageNumber : ${viewComments.pagination.pageNumbers}">
+                <li><a th:href="@{/comments(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewComments.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
+            </ul>
+        </div>
+
+    </body>
+</html>
