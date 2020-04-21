@@ -11,7 +11,6 @@ import ru.mail.dimaushenko.repository.UserRepository;
 import static ru.mail.dimaushenko.repository.constants.SortOrderEnum.ASC;
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import static ru.mail.dimaushenko.repository.constants.UserRoleEnum.ADMINISTRATOR;
-import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.service.CommentService;
@@ -145,10 +144,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id);
         if (checkAmountAdministratorUsers(user)) {
             return false;
-        }
-        List<Comment> comments = commentRepository.getCommentsByUser(user);
-        for (Comment comment : comments) {
-            commentService.deleteComment(comment.getId());
         }
         userRepository.remove(user);
         return true;

@@ -83,20 +83,23 @@ public class UserConverterImpl implements UserConverter {
 
     @Override
     public User getObjectFromDTO(AddUserDTO userDTO) {
-        User user = new User();
-        user.setEmail(userDTO.getEmail());
+        if (userDTO != null) {
+            User user = new User();
+            user.setEmail(userDTO.getEmail());
 
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        UserRoleEnum role = userRoleConverter.getObjectFromDTO(userDTO.getRole());
-        user.setRole(role);
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            UserRoleEnum role = userRoleConverter.getObjectFromDTO(userDTO.getRole());
+            user.setRole(role);
 
-        UserDetails userDetails = new UserDetails();
-        userDetails.setName(userDTO.getName());
-        userDetails.setSurname(userDTO.getSurname());
-        userDetails.setPatronymic(userDTO.getPatronymic());
-        userDetails.setUser(user);
-        user.setUserDetails(userDetails);
-        return user;
+            UserDetails userDetails = new UserDetails();
+            userDetails.setName(userDTO.getName());
+            userDetails.setSurname(userDTO.getSurname());
+            userDetails.setPatronymic(userDTO.getPatronymic());
+            userDetails.setUser(user);
+            user.setUserDetails(userDetails);
+            return user;
+        }
+        return null;
     }
 
     @Override

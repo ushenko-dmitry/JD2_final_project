@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +17,13 @@ import ru.mail.dimaushenko.repository.model.UserDetails;
 import ru.mail.dimaushenko.service.converter.UserConverter;
 import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
 import ru.mail.dimaushenko.service.converter.UserRoleConverter;
+import static ru.mail.dimaushenko.service.converter.impl.util.Constants.ENCODE_PASSWORD;
+import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_NAME;
+import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_PATRONYMIC;
+import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_SURNAME;
 import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DTO_ROLE;
+import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_EMAIL;
+import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_PASSWORD;
 import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_ROLE;
 import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetails;
 import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetailsDTO;
@@ -23,6 +31,7 @@ import static ru.mail.dimaushenko.service.converter.impl.util.UserUtil.getUserDT
 import static ru.mail.dimaushenko.service.converter.impl.util.UserUtil.getUserWithNullUserDetails;
 import static ru.mail.dimaushenko.service.converter.impl.util.UserUtil.getValidUser;
 import static ru.mail.dimaushenko.service.converter.impl.util.UserUtil.getValidUserDTO;
+import ru.mail.dimaushenko.service.model.AddUserDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
 import ru.mail.dimaushenko.service.model.UserDetailsDTO;
 
@@ -89,8 +98,11 @@ public class UserConverterImplTest {
         UserDTO userDTO = getValidUserDTO(user);
         returnUserDTOs.add(userDTO);
 
+        when(userDetailsConverter.getDTOFromObject(user.getUserDetails())).thenReturn(userDTO.getUserDetails());
+        when(userRoleConverter.getDTOFromObject(user.getRole())).thenReturn(USER_DTO_ROLE);
         List<UserDTO> userDTOs = userConverter.getDTOFromObject(users);
         assertThat(userDTOs).isNotEmpty();
+        assertThat(userDTOs).isEqualTo(returnUserDTOs);
     }
 
     @Test
@@ -121,11 +133,63 @@ public class UserConverterImplTest {
     }
 
     @Test
-    public void testGetObjectFromDTO_AddUserDTO() {
+    public void testGetObjectFromDTO_EmptyList_Input() {
+        List<UserDTO> userDTOs = new ArrayList<>();
+        List<User> users = userConverter.getObjectFromDTO(userDTOs);
+        assertThat(users).isEmpty();
     }
 
     @Test
-    public void testGetObjectFromDTO_List() {
+    public void testGetObjectFromDTO_ValidList_Input() {
+        List<UserDTO> userDTOs = new ArrayList<>();
+        UserDTO userDTO = getValidUserDTO();
+        userDTOs.add(userDTO);
+
+        List<User> returnUsers = new ArrayList<>();
+        User user = getValidUser(userDTO);
+        returnUsers.add(user);
+
+        when(userDetailsConverter.getObjectFromDTO(userDTO.getUserDetails())).thenReturn(user.getUserDetails());
+        when(userRoleConverter.getObjectFromDTO(userDTO.getRole())).thenReturn(USER_ROLE);
+        List<User> users = userConverter.getObjectFromDTO(userDTOs);
+        assertThat(users).isNotEmpty();
+        assertThat(users).isEqualTo(returnUsers);
+    }
+
+    @Test
+    public void testGetObjectFromDTO_AddUserDTO_Input() {
+        AddUserDTO addUserDTO = new AddUserDTO();
+        addUserDTO.setEmail(USER_EMAIL);
+        addUserDTO.setPassword(USER_PASSWORD);
+        addUserDTO.setName(USER_DETAILS_NAME);
+        addUserDTO.setSurname(USER_DETAILS_SURNAME);
+        addUserDTO.setPatronymic(USER_DETAILS_PATRONYMIC);
+        addUserDTO.setRole(USER_DTO_ROLE);
+
+        User returnUser = new User();
+        returnUser.setEmail(USER_EMAIL);
+        returnUser.setPassword(ENCODE_PASSWORD);
+        returnUser.setRole(USER_ROLE);
+        UserDetails userDetails = new UserDetails();
+        userDetails.setName(USER_DETAILS_NAME);
+        userDetails.setSurname(USER_DETAILS_SURNAME);
+        userDetails.setPatronymic(USER_DETAILS_PATRONYMIC);
+        returnUser.setUserDetails(userDetails);
+
+        when(userRoleConverter.getObjectFromDTO(addUserDTO.getRole())).thenReturn(returnUser.getRole());
+        when(passwordEncoder.encode(addUserDTO.getPassword())).thenReturn(returnUser.getPassword());
+
+        User user = userConverter.getObjectFromDTO(addUserDTO);
+        assertThat(user).isEqualTo(returnUser);
+        verify(passwordEncoder, times(1)).encode(addUserDTO.getPassword());
+    }
+
+    @Test
+    public void testGetObjectFromDTO_AddUserDTOIsNull_Input() {
+        AddUserDTO addUserDTO = null;
+
+        User user = userConverter.getObjectFromDTO(addUserDTO);
+        assertThat(user).isNull();
     }
 
 }
