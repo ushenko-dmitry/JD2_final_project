@@ -12,4 +12,8 @@ public interface ConverterFacade {
 
     PaginationConverter getPaginationConverter();
 
+    UserProfileConverter getUserProfileConverter();
+
+    ArticleConverter getArticleConverter();
+
 }

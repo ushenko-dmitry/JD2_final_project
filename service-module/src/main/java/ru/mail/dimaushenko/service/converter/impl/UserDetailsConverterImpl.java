@@ -11,12 +11,17 @@ public class UserDetailsConverterImpl implements UserDetailsConverter {
 
     @Override
     public UserDetailsDTO getDTOFromObject(UserDetails userDetails) {
-        UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
-        userDetailsDTO.setUserId(userDetails.getUserId());
-        userDetailsDTO.setName(userDetails.getName());
-        userDetailsDTO.setSurname(userDetails.getSurname());
-        userDetailsDTO.setPatronymic(userDetails.getPatronymic());
-        return userDetailsDTO;
+        if (userDetails != null) {
+            UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+            userDetailsDTO.setUserId(userDetails.getUserId());
+            userDetailsDTO.setName(userDetails.getName());
+            userDetailsDTO.setSurname(userDetails.getSurname());
+            userDetailsDTO.setPatronymic(userDetails.getPatronymic());
+            userDetailsDTO.setAddress(userDetails.getAddress());
+            userDetailsDTO.setPhone(userDetails.getPhone());
+            return userDetailsDTO;
+        }
+        return null;
     }
 
     @Override
@@ -26,12 +31,17 @@ public class UserDetailsConverterImpl implements UserDetailsConverter {
 
     @Override
     public UserDetails getObjectFromDTO(UserDetailsDTO userDetailsDTO) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setUserId(userDetailsDTO.getUserId());
-        userDetails.setName(userDetailsDTO.getName());
-        userDetails.setSurname(userDetailsDTO.getSurname());
-        userDetails.setPatronymic(userDetailsDTO.getPatronymic());
-        return userDetails;
+        if (userDetailsDTO != null) {
+            UserDetails userDetails = new UserDetails();
+            userDetails.setUserId(userDetailsDTO.getUserId());
+            userDetails.setName(userDetailsDTO.getName());
+            userDetails.setSurname(userDetailsDTO.getSurname());
+            userDetails.setPatronymic(userDetailsDTO.getPatronymic());
+            userDetails.setAddress(userDetailsDTO.getAddress());
+            userDetails.setPhone(userDetailsDTO.getPhone());
+            return userDetails;
+        }
+        return null;
     }
 
     @Override

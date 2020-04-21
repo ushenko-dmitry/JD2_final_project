@@ -15,9 +15,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.mail.dimaushenko.repository.CommentRepository;
 import ru.mail.dimaushenko.repository.UserRepository;
-import ru.mail.dimaushenko.repository.constants.Sort;
+import ru.mail.dimaushenko.repository.constants.SortOrderEnum;
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
@@ -43,7 +44,7 @@ import ru.mail.dimaushenko.service.utils.impl.PaginationUtilImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
-    private final UserConverter userConverter = new UserConverterImpl(new UserDetailsConverterImpl(), new UserRoleConverterImpl());
+    private UserConverter userConverter;
     private final UserRoleConverter userRoleConverter = new UserRoleConverterImpl();
     private final PaginationConverter paginationConverter = new PaginationConverterImpl(new PaginationUtilImpl());
 
@@ -60,6 +61,9 @@ public class UserServiceTest {
     @Mock
     private PasswordUtil passwordUtil;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     private UserService userService;
 
     @Before
@@ -70,7 +74,13 @@ public class UserServiceTest {
                 commentService,
                 converterFacade,
                 emailUtil,
-                passwordUtil
+                passwordUtil,
+                passwordEncoder
+        );
+        userConverter = new UserConverterImpl(
+                new UserDetailsConverterImpl(),
+                userRoleConverter,
+                passwordEncoder
         );
     }
 
@@ -169,7 +179,7 @@ public class UserServiceTest {
         paginationDTO.setElementsPerPage(10);
         doReturn(paginationConverter).when(converterFacade).getPaginationConverter();
         Pagination pagination = paginationConverter.getObjectFromDTO(paginationDTO);
-        doReturn(new ArrayList<User>()).when(userRepository).getUsersSortByEmail(pagination, Sort.ASC);
+        doReturn(new ArrayList<User>()).when(userRepository).getUsersSortByEmail(pagination, SortOrderEnum.ASC);
         doReturn(userConverter).when(converterFacade).getUserConverter();
         List<UserDTO> usersSortByEmail = userService.getUsersSortByEmail(paginationDTO);
         assertThat(usersSortByEmail).isNotNull();

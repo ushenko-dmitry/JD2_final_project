@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Article</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div>Article</div>
+
+        <div class="article">
+
+            <div class="title">
+                <h3 th:text="${article.title}">Title</h3>
+            </div>
+
+            <div class="new_info">
+                <div class="new_date">
+                    <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
+                </div>
+                <div class="new_author">
+                    <span th:text="${article.userDetails.name}">Name Surname</span>
+                </div>
+            </div>
+
+            <div class="content">
+                <span th:text="${article.content}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a malesuada erat. Praesent facilisis, tellus in euismod luctus, justo neque sodales massa, et sollicitudin diam sapien in elit. Aenean consequat leo vitae lorem elementum, non laoreet risus tincidunt. Cras faucibus non nibh sit amet fermentum. Nulla feugiat leo massa, vel. </span>
+            </div>
+
+        </div>
+        <hr/>
+
+        <div>
+            <span>Comments</span>
+            <div class="comments">
+                <div class="comment" th:each="comment : ${article.comments}">
+                    <div class="name">
+                        <span th:text="${comment.userDetails.name}"></span>
+                    </div>
+                    <div class="date">
+                        <span th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}"></span>
+                    </div>
+                    <div class="comment">
+                        <span th:text="${comment.comment}"></span>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+
+
+        <p><a href="/articles" th:href="@{/articles}">Back</a></p>
+    </body>
+</html>

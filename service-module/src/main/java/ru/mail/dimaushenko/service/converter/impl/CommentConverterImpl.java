@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.service.converter.CommentConverter;
 import ru.mail.dimaushenko.service.converter.UserConverter;
+import ru.mail.dimaushenko.service.model.CommentArticleDTO;
 import ru.mail.dimaushenko.service.model.CommentDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
+import ru.mail.dimaushenko.service.model.UserDetailsDTO;
 
 @Component
 public class CommentConverterImpl implements CommentConverter {
@@ -47,6 +49,29 @@ public class CommentConverterImpl implements CommentConverter {
     @Override
     public List<Comment> getObjectFromDTO(List<CommentDTO> modelDTOs) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public CommentArticleDTO getCommentArticleFromObject(Comment comment) {
+        CommentArticleDTO commentArticleDTO = new CommentArticleDTO();
+        commentArticleDTO.setId(comment.getId());
+        commentArticleDTO.setComment(comment.getComment());
+        commentArticleDTO.setCreationDate(comment.getCreationDate());
+        commentArticleDTO.setIsVisible(comment.isIsVisible());
+
+        UserDTO userDTO = userConverter.getDTOFromObject(comment.getUser());
+        UserDetailsDTO userDetailsDTO = userDTO.getUserDetails();
+        commentArticleDTO.setUserDetails(userDetailsDTO);
+        return commentArticleDTO;
+    }
+
+    @Override
+    public List<CommentArticleDTO> getCommentArticleFromObject(List<Comment> comments) {
+        List<CommentArticleDTO> commentArticleDTOs = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentArticleDTOs.add(getCommentArticleFromObject(comment));
+        }
+        return commentArticleDTOs;
     }
 
 }

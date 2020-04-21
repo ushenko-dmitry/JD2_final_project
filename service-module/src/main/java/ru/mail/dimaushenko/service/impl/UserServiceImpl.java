@@ -4,27 +4,28 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.mail.dimaushenko.repository.CommentRepository;
 import ru.mail.dimaushenko.repository.UserRepository;
-import ru.mail.dimaushenko.repository.constants.Sort;
+import static ru.mail.dimaushenko.repository.constants.SortOrderEnum.ASC;
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import static ru.mail.dimaushenko.repository.constants.UserRoleEnum.ADMINISTRATOR;
-import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.service.CommentService;
-import ru.mail.dimaushenko.service.converter.ConverterFacade;
-import ru.mail.dimaushenko.service.converter.UserConverter;
 import ru.mail.dimaushenko.service.UserService;
-import static ru.mail.dimaushenko.service.constants.PasswordConstants.SALT;
+import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
+import ru.mail.dimaushenko.service.converter.UserConverter;
+import ru.mail.dimaushenko.service.converter.UserProfileConverter;
 import ru.mail.dimaushenko.service.converter.UserRoleConverter;
 import ru.mail.dimaushenko.service.model.AddUserDTO;
 import ru.mail.dimaushenko.service.model.AppUser;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
+import ru.mail.dimaushenko.service.model.UserPasswordDTO;
+import ru.mail.dimaushenko.service.model.UserProfileDTO;
 import ru.mail.dimaushenko.service.model.UserRoleEnumDTO;
 import ru.mail.dimaushenko.service.utils.PasswordUtil;
 import ru.mail.dimaushenko.service.utils.SentEmailUtil;
@@ -39,6 +40,7 @@ public class UserServiceImpl implements UserService {
     private final ConverterFacade converterFacade;
     private final SentEmailUtil emailUtil;
     private final PasswordUtil passwordUtil;
+    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(
             UserRepository userRepository,
@@ -46,7 +48,8 @@ public class UserServiceImpl implements UserService {
             CommentService commentService,
             ConverterFacade converterFacade,
             SentEmailUtil emailUtil,
-            PasswordUtil passwordUtil
+            PasswordUtil passwordUtil,
+            PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.commentRepository = commentRepository;
@@ -54,6 +57,7 @@ public class UserServiceImpl implements UserService {
         this.converterFacade = converterFacade;
         this.emailUtil = emailUtil;
         this.passwordUtil = passwordUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -70,7 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(AddUserDTO addUser) {
+    public UserDTO addUser(AddUserDTO addUser) {
         String password = passwordUtil.generatePassword();
         addUser.setPassword(password);
         UserConverter userConverter = converterFacade.getUserConverter();
@@ -81,6 +85,7 @@ public class UserServiceImpl implements UserService {
         String subject = "your password created";
         String message = "Your password: " + password;
         emailUtil.sentMessage(to, subject, message);
+        return userConverter.getDTOFromObject(user);
     }
 
     @Override
@@ -108,10 +113,18 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getUsersSortByEmail(PaginationDTO paginationDTO) {
         PaginationConverter paginationConverter = converterFacade.getPaginationConverter();
         Pagination pagination = paginationConverter.getObjectFromDTO(paginationDTO);
-        List<User> users = userRepository.getUsersSortByEmail(pagination, Sort.ASC);
+        List<User> users = userRepository.getUsersSortByEmail(pagination, ASC);
         UserConverter userConverter = converterFacade.getUserConverter();
         List<UserDTO> userDTOs = userConverter.getDTOFromObject(users);
         return userDTOs;
+    }
+
+    @Override
+    public UserProfileDTO getUserProfile(String username) {
+        User user = userRepository.getUserByEmail(username);
+        UserProfileConverter userProfileConverter = converterFacade.getUserProfileConverter();
+        UserProfileDTO userProfileDTO = userProfileConverter.getDTOFromObject(user);
+        return userProfileDTO;
     }
 
     @Override
@@ -132,10 +145,6 @@ public class UserServiceImpl implements UserService {
         if (checkAmountAdministratorUsers(user)) {
             return false;
         }
-        List<Comment> comments = commentRepository.getCommentsByUser(user);
-        for (Comment comment : comments) {
-            commentService.deleteComment(comment.getId());
-        }
         userRepository.remove(user);
         return true;
     }
@@ -145,7 +154,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id);
         String passwordBuckup = user.getPassword();
         String password = passwordUtil.generatePassword();
-        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt(SALT)));
+        user.setPassword(passwordEncoder.encode(password));
         String to = user.getEmail();
         String subject = "your password was reseted";
         String message = "Your new password: " + password;
@@ -167,6 +176,37 @@ public class UserServiceImpl implements UserService {
         User updated_user = userConverter.getObjectFromDTO(updated_userDTO);
         user.setRole(updated_user.getRole());
         return true;
+    }
+
+    @Override
+    public boolean updateUserPassword(UserPasswordDTO userPasswordDTO) {
+        User user = userRepository.findById(userPasswordDTO.getId());
+        String password = passwordEncoder.encode(userPasswordDTO.getPassword());
+        System.out.println(password);
+        user.setPassword(password);
+        return true;
+    }
+
+    @Override
+    public boolean updateUserDetails(UserProfileDTO userProfileDTO) {
+        User user = userRepository.findById(userProfileDTO.getId());
+        updateUser(user, userProfileDTO);
+        return true;
+    }
+
+    private void updateUser(User user, UserProfileDTO userProfileDTO) {
+        if (!userProfileDTO.getName().equals(user.getUserDetails().getName())) {
+            user.getUserDetails().setName(userProfileDTO.getName());
+        }
+        if (!userProfileDTO.getSurname().equals(user.getUserDetails().getSurname())) {
+            user.getUserDetails().setSurname(userProfileDTO.getSurname());
+        }
+        if (!userProfileDTO.getAddress().equals(user.getUserDetails().getAddress())) {
+            user.getUserDetails().setAddress(userProfileDTO.getAddress());
+        }
+        if (!userProfileDTO.getPhone().equals(user.getUserDetails().getPhone())) {
+            user.getUserDetails().setPhone(userProfileDTO.getPhone());
+        }
     }
 
     private boolean checkAmountAdministratorUsers(User user) {
