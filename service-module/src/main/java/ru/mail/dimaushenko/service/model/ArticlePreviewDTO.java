@@ -5,7 +5,7 @@ import java.util.Date;
 public class ArticlePreviewDTO {
 
     private Long id;
-    private UserDetailsDTO userDetails;
+    private UserDTO user;
     private String title;
     private String content;
     private Date date;
@@ -18,12 +18,12 @@ public class ArticlePreviewDTO {
         this.id = id;
     }
 
-    public UserDetailsDTO getUserDetails() {
-        return userDetails;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserDetails(UserDetailsDTO userDetails) {
-        this.userDetails = userDetails;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     public String getTitle() {

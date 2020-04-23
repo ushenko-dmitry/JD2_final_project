@@ -4,7 +4,7 @@
         <title>Login</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>-->
+        <link th:href="@{/css/style.css}" href="/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>Страница доступа</div>
@@ -15,7 +15,7 @@
             <p>You are logout</p>
         </th:block>
         <form method="POST" th:action="@{/login}">
-            <span>Email: <input type="email" name="username"/></span><br/>
+            <span>Email: <input type="text" name="username"/></span><br/>
             <span>Password: <input type="password" name="password"/></span><br/>
             <input type="submit" value="Log In"/>
         </form>

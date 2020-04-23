@@ -1,13 +1,13 @@
-package ru.mail.dimaushenko.service.converter.impl.util;
+package ru.mail.dimaushenko.service.converter.util;
 
 import ru.mail.dimaushenko.repository.model.UserDetails;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_DETAILS_ADDRESS;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_DETAILS_NAME;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_DETAILS_PATRONYMIC;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_DETAILS_PHONE;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_DETAILS_SURNAME;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_ID;
 import ru.mail.dimaushenko.service.model.UserDetailsDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_ID;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_PHONE;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_ADDRESS;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_PATRONYMIC;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_SURNAME;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DETAILS_NAME;
 
 public class UserDetailsUtil {
 

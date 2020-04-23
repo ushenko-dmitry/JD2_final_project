@@ -1,17 +1,17 @@
-package ru.mail.dimaushenko.service.utils.impl;
+package ru.mail.dimaushenko.service.components.impl;
 
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import ru.mail.dimaushenko.service.utils.SentEmailUtil;
+import ru.mail.dimaushenko.service.components.SentEmailComponent;
 
 @Component
-public class SentEmailUtilImpl implements SentEmailUtil {
+public class SentEmailComponentImpl implements SentEmailComponent {
 
     public final JavaMailSender javaMailSender;
 
-    public SentEmailUtilImpl(JavaMailSender javaMailSender) {
+    public SentEmailComponentImpl(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 

@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.service.converter.impl;
+package ru.mail.dimaushenko.service.converter;
 
 import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,14 +11,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
 import ru.mail.dimaushenko.service.converter.UserProfileConverter;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserProfileUtil.setupUserProfileWithNullUserDetailsDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserProfileUtil.setupValidUserProfileDTO;
+import ru.mail.dimaushenko.service.converter.impl.UserProfileConverterImpl;
+import static ru.mail.dimaushenko.service.converter.util.UserProfileUtil.setupUserProfileWithNullUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.util.UserProfileUtil.setupValidUserProfileDTO;
 import ru.mail.dimaushenko.service.model.UserDetailsDTO;
 import ru.mail.dimaushenko.service.model.UserProfileDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserUtil.getValidUser;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserUtil.getUserWithNullUserDetails;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetailsDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.util.UserUtil.getValidUser;
+import static ru.mail.dimaushenko.service.converter.util.UserUtil.getUserWithNullUserDetails;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getValidUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getUserDetailsDTO;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserProfileConverterImplTest {

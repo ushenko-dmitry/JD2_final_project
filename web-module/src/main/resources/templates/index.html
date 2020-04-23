@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <title>Mail page</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>Main page</div>
+        
+        <p><a th:href="@{/users}">Users</a></p>
+        <p><a th:href="@{/comments}">Comments</a></p>
         <p><a th:href="@{/articles}">News</a></p>
         <p><a th:href="@{/profile}">Profile</a></p>
         <p><a th:href="@{/logout}">Logout</a></p>

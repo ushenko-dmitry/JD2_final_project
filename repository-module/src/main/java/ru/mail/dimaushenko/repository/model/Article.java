@@ -34,7 +34,7 @@ public class Article implements Serializable {
     private String content;
     @Column
     private Date date;
-    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     public List<Comment> getComments() {

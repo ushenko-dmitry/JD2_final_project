@@ -33,10 +33,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/comments").hasAnyRole(UserRoleEnumDTO.ADMINISTRATOR.name())
                 .antMatchers("/comments/*/delete").hasAnyRole(UserRoleEnumDTO.ADMINISTRATOR.name())
                 .antMatchers("/profile").hasAnyRole(UserRoleEnumDTO.CUSTOMER_USER.name())
-                .antMatchers("/articles").hasAnyRole(UserRoleEnumDTO.CUSTOMER_USER.name())
+                .antMatchers("/profile/*").hasAnyRole(UserRoleEnumDTO.CUSTOMER_USER.name())
+                .antMatchers("/articles").hasAnyRole(
+                        UserRoleEnumDTO.CUSTOMER_USER.name(), 
+                        UserRoleEnumDTO.SALE_USER.name()
+                )
+                .regexMatchers("^(\\/articles\\/)([\\d]{1,})$").hasAnyRole(
+                        UserRoleEnumDTO.CUSTOMER_USER.name(), 
+                        UserRoleEnumDTO.SALE_USER.name()
+                )
+                .antMatchers("/articles/add").hasAnyRole(UserRoleEnumDTO.SALE_USER.name())
                 .antMatchers("/api/users").hasAnyRole(UserRoleEnumDTO.SECURE_API_USER.name())
                 .antMatchers("/api/articles").hasAnyRole(UserRoleEnumDTO.SECURE_API_USER.name())
                 .antMatchers("/api/articles/**").hasAnyRole(UserRoleEnumDTO.SECURE_API_USER.name())
+                .antMatchers("/css/style.css").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

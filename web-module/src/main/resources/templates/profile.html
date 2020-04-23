@@ -8,20 +8,20 @@
     </head>
     <body>
         <div>Profile</div>
-        <div>
-            <form method="GET" th:action="@{/profile/edit}" th:object="${user_profile}">
-                <p>Name: 
-                        <input type="text" placeholder="Name" th:value="*{name}" disabled=""/>
-                </p>
-                <p>Surname: 
-                        <input type="text" placeholder="Surname" th:value="*{surname}" disabled=""/>
-                </p>
-                <p>Address: 
-                        <input type="text" placeholder="Address" th:value="*{address}" disabled=""/>
-                </p>
-                <p>Phone: 
-                        <input type="text" placeholder="Phone" th:value="*{phone}" disabled=""/>
-                </p>
+        <div th:object="${user_profile}">
+            <p>Name: 
+                <input type="text" placeholder="Name" th:value="*{name}" disabled=""/>
+            </p>
+            <p>Surname: 
+                <input type="text" placeholder="Surname" th:value="*{surname}" disabled=""/>
+            </p>
+            <p>Address: 
+                <input type="text" placeholder="Address" th:value="*{address}" disabled=""/>
+            </p>
+            <p>Phone: 
+                <input type="text" placeholder="Phone" th:value="*{phone}" disabled=""/>
+            </p>
+            <form method="GET" th:action="@{/profile/edit}">
                 <input type="submit" value="Edit" />
             </form>
             <form method="POST" th:action="@{/profile/change_password}" th:object="${new_password}">

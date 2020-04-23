@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.service.converter.impl;
+package ru.mail.dimaushenko.service.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +8,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.model.UserDetails;
-import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
+import ru.mail.dimaushenko.service.converter.impl.UserDetailsConverterImpl;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getUserDetails;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getValidUserDetails;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getValidUserDetailsDTO;
 import ru.mail.dimaushenko.service.model.UserDetailsDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetailsDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetails;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetailsDTO;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getUserDetails;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserDetailsConverterImplTest {

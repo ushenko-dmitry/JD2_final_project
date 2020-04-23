@@ -51,4 +51,10 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.getAmountElements();
     }
 
+    @Override
+    public CommentDTO getCommentById(Long commentId) {
+        Comment comment = commentRepository.findById(commentId);
+        return converterFacade.getCommentConverter().getDTOFromObject(comment);
+    }
+
 }

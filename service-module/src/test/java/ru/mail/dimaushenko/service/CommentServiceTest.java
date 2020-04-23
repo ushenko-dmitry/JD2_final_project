@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.service.impl;
+package ru.mail.dimaushenko.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.CommentRepository;
 import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
-import ru.mail.dimaushenko.service.CommentService;
 import ru.mail.dimaushenko.service.converter.CommentConverter;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
+import ru.mail.dimaushenko.service.impl.CommentServiceImpl;
 import ru.mail.dimaushenko.service.model.CommentDTO;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 

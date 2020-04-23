@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.service.converter.impl.util;
+package ru.mail.dimaushenko.service.converter.util;
 
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.repository.model.UserDetails;

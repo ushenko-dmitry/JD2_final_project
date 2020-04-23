@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.service.impl;
+package ru.mail.dimaushenko.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.ArticleRepository;
 import ru.mail.dimaushenko.repository.UserRepository;
 import ru.mail.dimaushenko.repository.model.Article;
-import ru.mail.dimaushenko.service.ArticleService;
 import ru.mail.dimaushenko.service.converter.ArticleConverter;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
+import ru.mail.dimaushenko.service.impl.ArticleServiceImpl;
 import ru.mail.dimaushenko.service.model.AddArticleDTO;
 import ru.mail.dimaushenko.service.model.ArticleDTO;
 import ru.mail.dimaushenko.service.model.ArticlePreviewDTO;

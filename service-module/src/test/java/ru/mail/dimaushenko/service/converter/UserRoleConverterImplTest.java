@@ -1,4 +1,4 @@
-package ru.mail.dimaushenko.service.converter.impl;
+package ru.mail.dimaushenko.service.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import ru.mail.dimaushenko.service.converter.UserRoleConverter;
+import ru.mail.dimaushenko.service.converter.impl.UserRoleConverterImpl;
 import ru.mail.dimaushenko.service.model.UserRoleEnumDTO;
 
 @RunWith(MockitoJUnitRunner.class)

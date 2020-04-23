@@ -12,4 +12,6 @@ public interface CommentService {
 
     Integer getAmountComments();
 
+    CommentDTO getCommentById(Long commentId);
+
 }

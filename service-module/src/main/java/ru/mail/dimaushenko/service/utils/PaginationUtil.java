@@ -2,8 +2,10 @@ package ru.mail.dimaushenko.service.utils;
 
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 
-public interface PaginationUtil {
+public class PaginationUtil {
 
-    Integer getStartElement(PaginationDTO paginationDTO);
-    
+    public static Integer getStartElement(PaginationDTO paginationDTO) {
+        return (paginationDTO.getCurrentPage() - 1) * paginationDTO.getElementsPerPage();
+    }
+
 }

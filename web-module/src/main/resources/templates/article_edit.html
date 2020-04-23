@@ -3,38 +3,36 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
-        <title>Article</title>
+        <title>Article edit</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div>Article</div>
-        <th:block th:if="${#authentication.name == article.user.email}">
-            <form method="GET" th:action="@{/articles/{id}/edit(id=${article.id})}">
-                <input type="submit" value="Edit" />
-            </form>
-        </th:block>
-        <div class="article">
+        <form>
+            <div class="article">
 
-            <div class="title">
-                <h3 th:text="${article.title}">Title</h3>
-            </div>
-
-            <div class="new_info">
-                <div class="new_date">
-                    <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
+                <div class="title">
+                    <input type="text" th:field="${article.title}"/>
                 </div>
-                <div class="new_author">
-                    <span th:text="${article.user.userDetails.name}">Name Surname</span>
+
+                <div class="new_info">
+                    <div class="new_date">
+                        <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
+                    </div>
+                    <div class="new_author">
+                        <span th:text="${article.user.userDetails.name}">Name Surname</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="content">
-                <span th:text="${article.content}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a malesuada erat. Praesent facilisis, tellus in euismod luctus, justo neque sodales massa, et sollicitudin diam sapien in elit. Aenean consequat leo vitae lorem elementum, non laoreet risus tincidunt. Cras faucibus non nibh sit amet fermentum. Nulla feugiat leo massa, vel. </span>
-            </div>
+                <div class="content">
+                    <textarea th:field="${article.content}"></textarea>
+                </div>
 
-        </div>
+            </div>
+            <input type="submit" value="Save"/>
+        </form>
         <hr/>
 
         <div>
@@ -51,6 +49,9 @@
                         <span th:text="${comment.comment}"></span>
                     </div>
                     <br/>
+                    <form method="POST" th:action="@{/articles/{article_id}/comments/{comment_id}/delete(article_id=${article.id}, comment_id=${comment.id})}">
+                        <input type="submit" value="Delete"/>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,15 +1,15 @@
-package ru.mail.dimaushenko.service.converter.impl.util;
+package ru.mail.dimaushenko.service.converter.util;
 
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.repository.model.UserDetails;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_DTO_ROLE;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_EMAIL;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_ID;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_PASSWORD;
-import static ru.mail.dimaushenko.service.converter.impl.util.Constants.USER_ROLE;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetails;
-import static ru.mail.dimaushenko.service.converter.impl.util.UserDetailsUtil.getValidUserDetailsDTO;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_DTO_ROLE;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_EMAIL;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_ID;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_PASSWORD;
+import static ru.mail.dimaushenko.service.converter.util.Constants.USER_ROLE;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getValidUserDetails;
+import static ru.mail.dimaushenko.service.converter.util.UserDetailsUtil.getValidUserDetailsDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
 import ru.mail.dimaushenko.service.model.UserDetailsDTO;
 
