@@ -154,4 +154,45 @@
                                  referencedTableName="article"/>
     </changeSet>
     
+    <changeSet id="12" author="dimaushenko@mail.ru">
+        
+        <createTable tableName="item">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" 
+                             references="user(id)" 
+                             foreignKeyName="FK_item_user" />
+            </column>
+            <column name="name" type="varchar(255)" >
+                <constraints nullable="false"/>
+            </column> 
+            <column name="unique_number" type="varchar(40)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="double" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+    
+    <changeSet id="13" author="dimaushenko@mail.ru">
+        
+        <createTable tableName="item_details">
+            <column name="item_id" type="int">
+                <constraints nullable="false" 
+                             unique="true" 
+                             primaryKey="true" 
+                             references="user(id)" 
+                             foreignKeyName="FK_item_details_item" />
+            </column>
+            <column name="description" type="varchar(200)" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+    
 </databaseChangeLog>

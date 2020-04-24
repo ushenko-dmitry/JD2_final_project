@@ -16,4 +16,8 @@ public interface ConverterFacade {
 
     ArticleConverter getArticleConverter();
 
+    ItemConverter getItemConverter();
+
+    ItemDetailsConverter getItemDetailsConverter();
+
 }

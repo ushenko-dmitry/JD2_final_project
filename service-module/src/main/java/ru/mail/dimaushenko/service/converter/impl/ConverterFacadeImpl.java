@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 import ru.mail.dimaushenko.service.converter.ArticleConverter;
 import ru.mail.dimaushenko.service.converter.CommentConverter;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
+import ru.mail.dimaushenko.service.converter.ItemConverter;
+import ru.mail.dimaushenko.service.converter.ItemDetailsConverter;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
 import ru.mail.dimaushenko.service.converter.UserConverter;
 import ru.mail.dimaushenko.service.converter.UserDetailsConverter;
@@ -20,6 +22,8 @@ public class ConverterFacadeImpl implements ConverterFacade {
     private final PaginationConverter paginationConverter;
     private final UserProfileConverter userProfileConverter;
     private final ArticleConverter articleConverter;
+    private final ItemConverter itemConverter;
+    private final ItemDetailsConverter itemDetailsConverter;
 
     public ConverterFacadeImpl(
             UserConverter userConverter,
@@ -28,7 +32,9 @@ public class ConverterFacadeImpl implements ConverterFacade {
             UserRoleConverter userRoleConverter,
             PaginationConverter paginationConverter,
             UserProfileConverter userProfileConverter,
-            ArticleConverter articleConverter
+            ArticleConverter articleConverter,
+            ItemConverter itemConverter,
+            ItemDetailsConverter itemDetailsConverter
     ) {
         this.userConverter = userConverter;
         this.commentConverter = commentConverter;
@@ -37,6 +43,8 @@ public class ConverterFacadeImpl implements ConverterFacade {
         this.paginationConverter = paginationConverter;
         this.userProfileConverter = userProfileConverter;
         this.articleConverter = articleConverter;
+        this.itemConverter = itemConverter;
+        this.itemDetailsConverter = itemDetailsConverter;
     }
 
     @Override
@@ -72,6 +80,16 @@ public class ConverterFacadeImpl implements ConverterFacade {
     @Override
     public ArticleConverter getArticleConverter() {
         return articleConverter;
+    }
+
+    @Override
+    public ItemConverter getItemConverter() {
+        return itemConverter;
+    }
+
+    @Override
+    public ItemDetailsConverter getItemDetailsConverter() {
+        return itemDetailsConverter;
     }
 
 }
