@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import ru.mail.dimaushenko.service.model.AddArticleDTO;
 import ru.mail.dimaushenko.service.model.AppUser;
 import ru.mail.dimaushenko.service.model.ArticleDTO;
 import ru.mail.dimaushenko.service.model.ArticlePreviewDTO;
+import ru.mail.dimaushenko.service.model.CommentArticleDTO;
 import ru.mail.dimaushenko.service.model.CommentDTO;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
@@ -118,6 +120,27 @@ public class ArticleController {
         return "redirect:/article/" + id;
     }
 
+    @PostMapping("/{id}/edit")
+    public String editArticle(
+            @PathVariable(name = "id") Long id,
+            @Valid @ModelAttribute(name = "article") ArticleDTO articleDTO,
+            BindingResult bindingResult,
+            Authentication authentication,
+            Model model
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "article_edit";
+        }
+        AppUser appUser = (AppUser) authentication.getPrincipal();
+        ArticleDTO article = articleService.getArticle(id);
+        if (article.getUser().getEmail().equals(appUser.getUsername())) {
+            Boolean isUpdate = articleService.updateArticle(articleDTO);
+            return "redirect:/articles/" + id;
+        }
+        model.addAttribute("article", article);
+        return "article_edit";
+    }
+
     @PostMapping("/{article_id}/comments/{comment_id}/delete")
     public String deleteComment(
             @PathVariable(name = "article_id") Long articleId,
@@ -128,9 +151,15 @@ public class ArticleController {
         ArticleDTO article = articleService.getArticle(articleId);
         if (article.getUser().getEmail().equals(appUser.getUsername())) {
             CommentDTO comment = commentService.getCommentById(commentId);
-            boolean isCommentContains = article.getComments().contains(comment);
+            boolean isCommentContains = false;
+            for (CommentArticleDTO commentArticle : article.getComments()) {
+                if (commentArticle.getId() == comment.getId()) {
+                    isCommentContains = true;
+                    break;
+                }
+            }
             if (isCommentContains) {
-                commentService.deleteComment(commentId);
+                articleService.deleteComment(articleId, commentId);
                 return "redirect:/articles/" + articleId + "/edit";
             }
             return "redirect:/articles/" + articleId + "/edit";
@@ -161,7 +190,7 @@ public class ArticleController {
             pagination.getPageNumbers().add(i);
         }
         if (pagination.getPageNumbers().size() < pagination.getCurrentPage()) {
-            pagination.setCurrentPage(1);
+            pagination.setCurrentPage(DEFAULT_CURRENT_PAGE);
         }
         return pagination;
     }

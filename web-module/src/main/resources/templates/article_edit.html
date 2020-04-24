@@ -10,24 +10,24 @@
     </head>
     <body>
         <div>Article</div>
-        <form>
+        <form method="POST" th:action="@{/articles/{id}/edit(id=${article.id})}" th:object="${article}">
             <div class="article">
 
                 <div class="title">
-                    <input type="text" th:field="${article.title}"/>
+                    <input type="text" th:field="*{title}"/>
                 </div>
 
                 <div class="new_info">
                     <div class="new_date">
-                        <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
+                        <span th:text="*{#dates.format(date, 'dd-MMM-yyyy HH:mm')}">Date</span>
                     </div>
                     <div class="new_author">
-                        <span th:text="${article.user.userDetails.name}">Name Surname</span>
+                        <span th:text="*{user.userDetails.name}">Name Surname</span>
                     </div>
                 </div>
 
                 <div class="content">
-                    <textarea th:field="${article.content}"></textarea>
+                    <textarea th:field="*{content}"></textarea>
                 </div>
 
             </div>

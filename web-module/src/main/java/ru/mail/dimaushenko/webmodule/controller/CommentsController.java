@@ -70,7 +70,7 @@ public class CommentsController {
             pagination.getPageNumbers().add(i);
         }
         if (pagination.getPageNumbers().size() < pagination.getCurrentPage()) {
-            pagination.setCurrentPage(1);
+            pagination.setCurrentPage(DEFAULT_CURRENT_PAGE);
         }
         return pagination;
     }

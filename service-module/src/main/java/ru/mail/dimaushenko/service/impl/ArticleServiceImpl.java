@@ -5,9 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ru.mail.dimaushenko.repository.ArticleRepository;
+import ru.mail.dimaushenko.repository.CommentRepository;
 import ru.mail.dimaushenko.repository.UserRepository;
 import static ru.mail.dimaushenko.repository.constants.SortOrderEnum.DESC;
 import ru.mail.dimaushenko.repository.model.Article;
+import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.service.ArticleService;
@@ -25,11 +27,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
     private final ConverterFacade converterFacade;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository, UserRepository userRepository, ConverterFacade converterFacade) {
+    public ArticleServiceImpl(
+            ArticleRepository articleRepository, 
+            UserRepository userRepository, 
+            CommentRepository commentRepository,
+            ConverterFacade converterFacade
+    ) {
         this.articleRepository = articleRepository;
         this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
         this.converterFacade = converterFacade;
     }
 
@@ -79,6 +88,25 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Integer getAmountArticles() {
         return articleRepository.getAmountElements();
+    }
+
+    @Override
+    public Boolean updateArticle(ArticleDTO articleDTO) {
+        ArticleConverter articleConverter = converterFacade.getArticleConverter();
+        Article updatedArticle = articleConverter.getObjectFromDTO(articleDTO);
+        Article article = articleRepository.findById(articleDTO.getId());
+        article.setTitle(updatedArticle.getTitle());
+        article.setContent(updatedArticle.getContent());
+        article.setDate(new Date(System.currentTimeMillis()));
+        return true;
+    }
+
+    @Override
+    public void deleteComment(Long articleId, Long commentId) {
+        Article article = articleRepository.findById(articleId);
+        Comment comment = commentRepository.findById(commentId);
+        article.getComments().remove(comment);
+        commentRepository.remove(comment);
     }
 
 }

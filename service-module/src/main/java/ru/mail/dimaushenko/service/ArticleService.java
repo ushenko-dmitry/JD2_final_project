@@ -20,4 +20,8 @@ public interface ArticleService {
 
     Integer getAmountArticles();
 
+    Boolean updateArticle(ArticleDTO article);
+
+    void deleteComment(Long articleId, Long commentId);
+
 }
