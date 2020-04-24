@@ -31,8 +31,8 @@ public class ArticleServiceImpl implements ArticleService {
     private final ConverterFacade converterFacade;
 
     public ArticleServiceImpl(
-            ArticleRepository articleRepository, 
-            UserRepository userRepository, 
+            ArticleRepository articleRepository,
+            UserRepository userRepository,
             CommentRepository commentRepository,
             ConverterFacade converterFacade
     ) {
@@ -106,7 +106,17 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = articleRepository.findById(articleId);
         Comment comment = commentRepository.findById(commentId);
         article.getComments().remove(comment);
+        comment.setArticle(null);
         commentRepository.remove(comment);
     }
 
+//    @Override
+//    public void deleteComment(Long articleId, Long commentId) {
+//        Article article = articleRepository.findById(articleId);
+//        CommentDTO commentDTO = commentService.getCommentById(commentId);
+//        CommentConverter commentConverter = converterFacade.getCommentConverter();
+//        Comment comment = commentConverter.getObjectFromDTO(commentDTO);
+//        article.getComments().remove(comment);
+//        commentService.deleteComment(commentDTO.getId());
+//    }
 }

@@ -12,6 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
 import ru.mail.dimaushenko.repository.ArticleRepository;
+import ru.mail.dimaushenko.repository.CommentRepository;
 import ru.mail.dimaushenko.repository.UserRepository;
 import ru.mail.dimaushenko.repository.model.Article;
 import ru.mail.dimaushenko.service.converter.ArticleConverter;
@@ -34,13 +35,20 @@ public class ArticleServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
+    private CommentRepository commentRepository;
+    @Mock
     private ConverterFacade converterFacade;
     @Mock
     private ArticleConverter articleConverter;
 
     @Before
     public void setup() {
-        this.articleService = new ArticleServiceImpl(articleRepository, userRepository, converterFacade);
+        this.articleService = new ArticleServiceImpl(
+                articleRepository,
+                userRepository,
+                commentRepository,
+                converterFacade
+        );
 
         when(converterFacade.getArticleConverter()).thenReturn(articleConverter);
 
