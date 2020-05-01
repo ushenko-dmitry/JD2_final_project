@@ -40,7 +40,7 @@
             <div class="comments">
                 <div class="comment" th:each="comment : ${article.comments}">
                     <div class="name">
-                        <span th:text="${comment.userDetails.name}"></span>
+                        <span th:if="${comment.userDetails}" th:text="${comment.userDetails.surname + ' ' + comment.userDetails.name}">Name Surname</span>
                     </div>
                     <div class="date">
                         <span th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}"></span>
@@ -57,6 +57,6 @@
         </div>
 
 
-        <p><a href="/articles" th:href="@{/articles}">Back</a></p>
+        <p><a href="/articles" th:href="@{/articles/{id}(id=${article.id})}">Back</a></p>
     </body>
 </html>

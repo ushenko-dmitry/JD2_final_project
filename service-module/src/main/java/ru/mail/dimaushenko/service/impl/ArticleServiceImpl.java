@@ -110,13 +110,4 @@ public class ArticleServiceImpl implements ArticleService {
         commentRepository.remove(comment);
     }
 
-//    @Override
-//    public void deleteComment(Long articleId, Long commentId) {
-//        Article article = articleRepository.findById(articleId);
-//        CommentDTO commentDTO = commentService.getCommentById(commentId);
-//        CommentConverter commentConverter = converterFacade.getCommentConverter();
-//        Comment comment = commentConverter.getObjectFromDTO(commentDTO);
-//        article.getComments().remove(comment);
-//        commentService.deleteComment(commentDTO.getId());
-//    }
 }

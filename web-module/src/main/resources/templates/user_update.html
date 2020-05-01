@@ -4,31 +4,59 @@
         <title>Update user</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>    
     </head>
     <body>
-        <div>Update user</div>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Update user</span></div>
         <th:block th:if="${param.error}">
             <p>Error with update user</p>
         </th:block>
-        <form method="POST" th:action="@{/users/{id}/update(id=${user.id})}" th:object="${user}">
-            <p>Surname: <input type="text" name="surname" placeholder="Surname" th:field="*{userDetails.surname}" disabled="true"/></p>
-            <p>Name: <input type="text" name="name" placeholder="Name" th:field="*{userDetails.name}" disabled="true"/></p>
-            <p>Patronymic: <input type="text" name="patronymic" placeholder="Patronymic" th:field="*{userDetails.patronymic}" disabled="true"/></p>
-            <p>Email: <input type="email" name="email" placeholder="Email" th:field="*{email}" disabled="true"/></p>
-            <p>
-                <select name="role" th:field="*{role}">
-                    <option value="ADMINISTRATOR">Administrator</option>
-                    <option value="SALE_USER">Sale User</option>
-                    <option value="CUSTOMER_USER">Customer User</option>
-                    <option value="SECURE_API_USER">Secure API User</option>
-                </select>
-            </p>
-            <input type="submit" value="Update"/>
-        </form>
-        <form method="POST" th:action="@{/users/{id}/resetPassword(id=${user.id})}">
-            <input type="submit" value="Reset password"/>
-        </form>
-        <a href="/users" th:href="@{/users}">Back</a>
+        <p th:if="${param.reset[0]} == 'true'">Password was successfully reset</p>
+        <div class="add_user_form">
+            <form method="POST" th:action="@{/users/{id}/update(id=${user.id})}" th:object="${user}">
+                <p>Surname</p>
+                <p><input type="text" name="surname" placeholder="Surname" th:field="*{userDetails.surname}" disabled=""/></p>
+                <th:block th:if="${#fields.hasErrors('userDetails.surname')}">
+                    <span th:errors="*{userDetails.surname}">error</span><br/>
+                </th:block>
+                <br/>
+                <p>Name</p>
+                <p><input type="text" name="name" placeholder="Name" th:field="*{userDetails.name}" disabled=""/></p>
+                <th:block th:if="${#fields.hasErrors('userDetails.surname')}">
+                    <span th:errors="*{userDetails.surname}">error</span><br/>
+                </th:block>
+                <br/>
+                <p>Patronymic</p>
+                <p><input type="text" name="patronymic" placeholder="Patronymic" th:field="*{userDetails.patronymic}" disabled=""/></p>
+                <th:block th:if="${#fields.hasErrors('userDetails.surname')}">
+                    <span th:errors="*{userDetails.surname}">error</span><br/>
+                </th:block>
+                <br/>
+                <p>Email</p>
+                <p><input type="email" name="email" placeholder="Email" th:field="*{email}" disabled=""/></p>
+                <th:block th:if="${#fields.hasErrors('userDetails.surname')}">
+                    <span th:errors="*{userDetails.surname}">error</span><br/>
+                </th:block>
+                <br/>
+                <p>Role</p>
+                <p>
+                    <select name="role" th:field="*{role}">
+                        <option value="ADMINISTRATOR">Administrator</option>
+                        <option value="SALE_USER">Sale User</option>
+                        <option value="CUSTOMER_USER">Customer User</option>
+                        <option value="SECURE_API_USER">Secure API User</option>
+                    </select>
+                </p>
+                <br/>
+                <input type="submit" value="Update"/>
+            </form>
+            <br/>
+            <form method="POST" th:action="@{/users/{id}/resetPassword(id=${user.id})}">
+                <input type="submit" value="Reset password"/>
+            </form>
+        </div>
+
+        <div class="back_btn"><a href="/users" th:href="@{/users}">Back</a></div>
     </body>
 </html>

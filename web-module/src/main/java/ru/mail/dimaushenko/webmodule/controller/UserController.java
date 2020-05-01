@@ -89,7 +89,7 @@ public class UserController {
 
         UserDTO user = userService.getUserById(id);
         model.addAttribute("user", user);
-        return "user_update";
+        return "redirect:/users/" + id + "/update?reset=true";
     }
 
     @PostMapping("/delete")

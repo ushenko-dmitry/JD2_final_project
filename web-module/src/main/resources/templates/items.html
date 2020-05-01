@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <title>Items</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Items</div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Number</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                    <td>View</td>
+                    <th:block sec:authorize="hasRole('SALE_USER')">
+                        <td>Copy</td>
+                        <td>Delete</td>
+                    </th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${viewItems.items}">
+                    <td th:text="${item.uuid}">Number</td>
+                    <td th:text="${item.name}">Name</td>
+                    <td th:text="${item.price}">Price</td>
+                    <td><a href="/items" th:href="@{/items/{uuid}(uuid = ${item.uuid})}">View</a></td>
+                    <th:block sec:authorize="hasRole('SALE_USER')">
+                        <td>
+                            <form method="POST" th:action="@{/items/{uuid}/copy(uuid=${item.uuid})}">
+                                <input type="submit" value="Copy"/>
+                            </form>
+                        </td>
+                        <td>
+                            <th:block th:if="${#authentication.name == item.user.email}">
+                                <form method="POST" th:action="@{/items/{uuid}/delete(uuid=${item.uuid})}">
+                                    <input type="submit" value="Delete" />
+                                </form>
+                            </th:block>
+                            <th:block th:unless="${#authentication.name == item.user.email}">
+                                <form>
+                                    <input type="submit" value="Delete" disabled=""/>
+                                </form>
+                            </th:block>
+                        </td>
+                    </th:block>
+                </tr>
+            </tbody>
+        </table>
+
+        <form method="POST" enctype="multipart/form-data" th:action="@{/items/upload}">
+            File to upload: <input type="file" name="file"/>
+            <br/>
+            Name: <input type="text" name="name"/>
+            <br/>
+            <br/>
+            <input type="submit" value="Upload"/> 
+            Press here to upload the file!
+        </form>
+
+
+        <div th:if="${#lists.size(viewItems.pagination.pageNumbers)} > 1">
+            <ul th:each="pageNumber : ${viewItems.pagination.pageNumbers}">
+                <li><a th:href="@{/items(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewItems.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
+            </ul>
+        </div>
+
+        <p><a href="/" th:href="@{/}">Back</a></p>
+    </body>
+</html>

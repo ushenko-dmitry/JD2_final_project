@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <title>Baskets</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Baskets</div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Number</td>
+                    <td>Status</td>
+                    <td>Name</td>
+                    <td>Amount</td>
+                    <td>Price</td>
+                    <th:block sec:authorize="hasRole('SALE_USER')">
+                        <td>View</td>
+                    </th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="basket : ${viewBaskets.baskets}">
+                    <td th:text="${basket.id}">Number</td>
+                    <td th:text="${basket.orderStatus}">Status</td>
+                    <td th:text="${basket.orderedItem.name}">Name</td>
+                    <td th:text="${basket.orderedItem.amount}">Amount</td>
+                    <td th:text="${basket.orderedItem.price * basket.orderedItem.amount}">Price</td>
+                    <th:block sec:authorize="hasRole('SALE_USER')">
+                        <td><a href="/baskets" th:href="@{/baskets/{id}(id = ${basket.id})}">View</a></td>
+                    </th:block>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.size(viewBaskets.pagination.pageNumbers)} > 1">
+            <ul th:each="pageNumber : ${viewBaskets.pagination.pageNumbers}">
+                <li><a th:href="@{/baskets(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewBaskets.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
+            </ul>
+        </div>
+
+        <p><a href="/" th:href="@{/}">Back</a></p>
+
+    </body>
+</html>

@@ -6,15 +6,9 @@
         <title>Mail page</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" href="/css/style.css" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Main page</div>
-        
-        <p><a th:href="@{/users}">Users</a></p>
-        <p><a th:href="@{/comments}">Comments</a></p>
-        <p><a th:href="@{/articles}">News</a></p>
-        <p><a th:href="@{/profile}">Profile</a></p>
-        <p><a th:href="@{/logout}">Logout</a></p>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
     </body>
 </html>

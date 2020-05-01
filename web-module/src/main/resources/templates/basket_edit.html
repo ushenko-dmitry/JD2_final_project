@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Basket</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Basket</div>
+        <form method="POST" th:action="@{/baskets/{id}/edit(id = ${basket.id})}" th:object="${basket}">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <td>Number</td>
+                        <td>Status</td>
+                        <td>Name</td>
+                        <td>Customer Id</td>
+                        <td>Customer Phone</td>
+                        <td>Amount</td>
+                        <td>Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td th:text="*{id}">Number</td>
+                        <td>
+
+                            <select th:field="*{orderStatus}">
+                                <option value="NEW">New</option>
+                                <option value="IN_PROGRESS">In progress</option>
+                                <option value="DELIVERED">Delivered</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+
+                        </td>
+                        <td th:text="*{orderedItem.name}">Name</td>
+                        <td th:text="*{userId}">Customer Id</td>
+                        <td th:text="*{userPhone}">Customer Phone</td>
+                        <td th:text="*{orderedItem.amount}">Amount</td>
+                        <td th:text="*{orderedItem.price * orderedItem.amount}">Price</td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="submit" value="Save"/>
+        </form>
+        <p><a href="/baskets" th:href="@{/baskets}">Back</a></p>
+    </body>
+</html>

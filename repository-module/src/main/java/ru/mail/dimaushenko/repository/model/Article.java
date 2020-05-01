@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.OrderBy;
 
 @Entity
 @Table(name = "article")
@@ -35,6 +36,7 @@ public class Article implements Serializable {
     @Column
     private Date date;
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy(clause = "creationDate desc")
     private List<Comment> comments = new ArrayList<>();
 
     public List<Comment> getComments() {

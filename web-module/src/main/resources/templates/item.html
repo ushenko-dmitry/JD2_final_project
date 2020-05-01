@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head>
+        <title>Item</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div>Item</div>
+        <table border="1" th:object="${item}">
+            <thead>
+                <tr>
+                    <td>Number</td>
+                    <td>Name</td>
+                    <td>Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="*{uuid}">Number</td>
+                    <td th:text="*{name}">Name</td>
+                    <td th:text="*{price}">Price</td>
+                </tr>
+                <tr>
+                    <td colspan="3">Description</td>
+                </tr>
+                <tr>
+                    <td colspan="3" th:text="*{itemDetails.description}">Description</td>
+                </tr>
+            </tbody>
+        </table>
+        <th:block sec:authorize="hasRole('CUSTOMER_USER')">
+            <form method="POST" th:action="@{/items/{uuid}/buskets(uuid=${item.uuid})}" th:object="${new_basket}">
+                <input type="number" placeholder="amount" th:field="*{amount}"/>
+                <input type="submit" value="Add to basket"/>
+            </form>
+        </th:block>
+        <a href="/items" th:href="@{/items}">Back</a>
+    </body>
+</html>

@@ -1,7 +1,12 @@
-var delete_checkbox_id_text = "delete_checkbox_";
-var elements = document.getElementsByName("delete_checkbox");
-for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener("click", delete_user_manager);
+var delete_checkbox_id_text;
+var elements;
+window.onload = function(){
+    delete_checkbox_id_text = "delete_checkbox_";
+
+    elements = document.getElementsByName("delete_checkbox");
+    for (var i = 0; i < elements.length; i++) {
+        elements[i].addEventListener("click", delete_user_manager);
+    }
 }
 
 function delete_user_manager() {

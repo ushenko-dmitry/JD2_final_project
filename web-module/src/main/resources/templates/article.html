@@ -26,7 +26,7 @@
                     <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
                 </div>
                 <div class="new_author">
-                    <span th:text="${article.user.userDetails.name}">Name Surname</span>
+                    <span th:if="${article.user.userDetails}" th:text="${article.user.userDetails.surname + ' ' + article.user.userDetails.name}">Name Surname</span>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@
             <div class="comments">
                 <div class="comment" th:each="comment : ${article.comments}">
                     <div class="name">
-                        <span th:text="${comment.userDetails.name}"></span>
+                        <span th:if="${comment.userDetails}" th:text="${comment.userDetails.surname + ' ' + comment.userDetails.name}">Name Surname</span>
                     </div>
                     <div class="date">
                         <span th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}"></span>
@@ -53,6 +53,9 @@
                     <br/>
                 </div>
             </div>
+            <th:block sec:authorize="hasRole('CUSTOMER_USER')">
+            <p><a href="/articles" th:href="@{/articles/{id}/comments(id=${article.id})}">Add comment</a></p>
+            </th:block>
         </div>
 
 

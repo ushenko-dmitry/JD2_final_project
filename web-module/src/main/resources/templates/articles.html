@@ -23,7 +23,7 @@
                         <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
                     </div>
                     <div class="new_author">
-                        <span th:text="${article.user.userDetails.name}">Name Surname</span>
+                        <span th:if="${article.user.userDetails}" th:text="${article.user.userDetails.surname + ' ' + article.user.userDetails.name}">Name Surname</span>
                     </div>
                 </div>
 
@@ -46,7 +46,9 @@
             </ul>
         </div>
 
-        <p><a href="/articles/add" th:href="@{/articles/add}">Add article</a></p>
+        <th:block sec:authorize="hasRole('SALE_USER')">
+            <p><a href="/articles/add" th:href="@{/articles/add}">Add article</a></p>
+        </th:block>
         <p><a href="/" th:href="@{/}">Back</a></p>
 
     </body>

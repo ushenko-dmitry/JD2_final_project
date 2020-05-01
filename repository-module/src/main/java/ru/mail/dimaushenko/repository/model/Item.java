@@ -3,14 +3,16 @@ package ru.mail.dimaushenko.repository.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import static javax.persistence.FetchType.LAZY;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,12 +24,13 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "user_id", nullable = false)
+    @ManyToOne(fetch = LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "uniqe_number", nullable = false)
-    private UUID uuid;
+    @Column(name = "unique_number", nullable = false)
+    private String uuid;
     @Column(name = "price", nullable = false)
     private BigDecimal price;
     @OneToOne(
@@ -62,11 +65,11 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

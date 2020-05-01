@@ -10,20 +10,20 @@
         <div>Profile</div>
         <div>
             <form method="POST" th:action="@{/profile/edit}" th:object="${user_profile}">                
-                <p>Name: 
-                        <input type="text" placeholder="Name" th:value="*{name}" th:field="*{name}"/>
+                <p>Name</p>
+                <p><input type="text" placeholder="Name" th:value="*{name}" th:field="*{name}"/>
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">pass error</span>
                 </p>
-                <p>Surname: 
-                        <input type="text" placeholder="Surname" th:value="*{surname}"  th:field="*{surname}"/>
+                <p>Surname</p>
+                <p><input type="text" placeholder="Surname" th:value="*{surname}"  th:field="*{surname}"/>
                         <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">pass error</span>
                 </p>
-                <p>Address: 
-                        <input type="text"  placeholder="Address" th:value="*{address}"  th:field="*{address}"/>
+                <p>Address</p>
+                <p><input type="text"  placeholder="Address" th:value="*{address}"  th:field="*{address}"/>
                         <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">pass error</span>
                 </p>
-                <p>Phone: 
-                        <input type="text" placeholder="Phone" th:value="*{phone}"  th:field="*{phone}"/>
+                <p>Phone</p>
+                <p><input type="text" placeholder="Phone" th:value="*{phone}"  th:field="*{phone}"/>
                         <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">pass error</span>
                 </p>
                 <input type="hidden" th:field="*{id}"/>

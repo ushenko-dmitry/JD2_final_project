@@ -194,5 +194,62 @@
         </createTable>
         
     </changeSet>
-    
+
+    <changeSet id="14" author="dimaushenko@mail.ru">
+        <dropForeignKeyConstraint baseTableName="item_details"
+                                  constraintName="FK_item_details_item"/>
+        <addForeignKeyConstraint baseTableName="item_details"
+                                 baseColumnNames="item_id" 
+                                 constraintName="FK_item_details_item"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item"/>
+    </changeSet>
+
+    <changeSet id="15" author="dimaushenko@mail.ru">
+
+        <createTable tableName="basket">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" 
+                             references="user(id)" 
+                             foreignKeyName="FK_basket_user" />
+            </column>
+            <column name="order_status" type="enum('NEW', 'IN_PROGRESS', 'DELIVERED', 'REJECTED')"/>
+            <column name="creation_date" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="16" author="dimaushenko@mail.ru">
+
+        <createTable tableName="ordered_item">
+            <column name="basket_id" type="int">
+                <constraints nullable="false" 
+                             unique="true" 
+                             primaryKey="true" 
+                             references="basket(id)" 
+                             foreignKeyName="FK_ordered_item_basket" />
+            </column>
+            <column name="user_id" type="int">
+                <constraints primaryKey="true" 
+                             references="user(id)" 
+                             foreignKeyName="FK_ordered_item_user" />
+            </column>
+            <column name="name" type="varchar(255)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="int" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="double" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
 </databaseChangeLog>

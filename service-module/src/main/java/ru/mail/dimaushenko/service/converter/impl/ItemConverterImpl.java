@@ -1,6 +1,8 @@
 package ru.mail.dimaushenko.service.converter.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 import ru.mail.dimaushenko.repository.model.Item;
 import ru.mail.dimaushenko.repository.model.ItemDetails;
@@ -31,7 +33,7 @@ public class ItemConverterImpl implements ItemConverter {
         if (item != null) {
             ItemDTO itemDTO = new ItemDTO();
             itemDTO.setId(item.getId());
-            itemDTO.setUuid(item.getUuid());
+            itemDTO.setUuid(UUID.fromString(item.getUuid()));
             itemDTO.setName(item.getName());
             itemDTO.setPrice(item.getPrice());
 
@@ -48,8 +50,12 @@ public class ItemConverterImpl implements ItemConverter {
     }
 
     @Override
-    public List<ItemDTO> getDTOFromObject(List<Item> models) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<ItemDTO> getDTOFromObject(List<Item> itemList) {
+        List<ItemDTO> itemDTOList = new ArrayList<>();
+        for (Item item : itemList) {
+            itemDTOList.add(getDTOFromObject(item));
+        }
+        return itemDTOList;
     }
 
     @Override
@@ -57,7 +63,7 @@ public class ItemConverterImpl implements ItemConverter {
         if (modelDTO != null) {
             Item item = new Item();
             item.setId(modelDTO.getId());
-            item.setUuid(modelDTO.getUuid());
+            item.setUuid(modelDTO.getUuid().toString());
             item.setName(modelDTO.getName());
             item.setPrice(modelDTO.getPrice());
 

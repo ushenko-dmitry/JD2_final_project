@@ -20,4 +20,16 @@ public interface ConverterFacade {
 
     ItemDetailsConverter getItemDetailsConverter();
 
+    ItemPreviewConverter getItemPreviewConverter();
+
+    AddItemConverter getAddItemConverter();
+
+    BasketConverter getBasketConverter();
+
+    AddBasketConverter getAddBasketConverter();
+
+    BasketPreviewConverter getBasketPreviewConverter();
+
+    OrderedItemConverter getOrderedItemConverter();
+
 }

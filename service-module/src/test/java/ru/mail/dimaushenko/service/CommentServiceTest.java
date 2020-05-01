@@ -14,7 +14,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
+import ru.mail.dimaushenko.repository.ArticleRepository;
 import ru.mail.dimaushenko.repository.CommentRepository;
+import ru.mail.dimaushenko.repository.UserRepository;
 import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.service.converter.CommentConverter;
@@ -34,13 +36,22 @@ public class CommentServiceTest {
     @Mock
     private CommentRepository commentRepository;
     @Mock
+    private UserRepository userRepository;
+    @Mock
+    private ArticleRepository articleRepository;
+    @Mock
     private ConverterFacade converterFacade;
 
     private CommentService commentService;
 
     @Before
     public void setup() {
-        commentService = new CommentServiceImpl(commentRepository, converterFacade);
+        commentService = new CommentServiceImpl(
+                commentRepository,
+                userRepository,
+                articleRepository,
+                converterFacade
+        );
     }
 
     @Test

@@ -17,6 +17,7 @@ import ru.mail.dimaushenko.service.ArticleService;
 import ru.mail.dimaushenko.service.CommentService;
 import ru.mail.dimaushenko.service.UserService;
 import ru.mail.dimaushenko.service.model.AddArticleDTO;
+import ru.mail.dimaushenko.service.model.AddCommentDTO;
 import ru.mail.dimaushenko.service.model.AppUser;
 import ru.mail.dimaushenko.service.model.ArticleDTO;
 import ru.mail.dimaushenko.service.model.ArticlePreviewDTO;
@@ -117,7 +118,7 @@ public class ArticleController {
             model.addAttribute("article", article);
             return "article_edit";
         }
-        return "redirect:/article/" + id;
+        return "redirect:/articles/" + id;
     }
 
     @PostMapping("/{id}/edit")
@@ -165,6 +166,36 @@ public class ArticleController {
             return "redirect:/articles/" + articleId + "/edit";
         }
         return "redirect:/articles/" + articleId + "/edit";
+    }
+
+    @GetMapping("/{id}/comments")
+    public String showAddCommentPage(
+            @PathVariable(name = "id") Long articleId,
+            Model model
+    ) {
+        AddCommentDTO addCommentDTO = new AddCommentDTO();
+        addCommentDTO.setArticleId(articleId);
+        model.addAttribute("new_comment", addCommentDTO);
+        return "comment_add";
+    }
+
+    @PostMapping("/{id}/comments")
+    public String addComment(
+            @PathVariable(name = "id") Long articleId,
+            @Valid @ModelAttribute(name = "new_comment") AddCommentDTO addCommentDTO,
+            BindingResult bindingResult,
+            Model model,
+            Authentication authentication
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "comment_add";
+        }
+        AppUser appUser = (AppUser) authentication.getPrincipal();
+        UserDTO user = userService.getUserByEmail(appUser.getUsername());
+        addCommentDTO.setUserId(user.getId());
+        addCommentDTO.setArticleId(articleId);
+        commentService.addComment(addCommentDTO);
+        return "redirect:/articles/" + articleId;
     }
 
     private PaginationDTO setPagination(PaginationDTO pagination) {

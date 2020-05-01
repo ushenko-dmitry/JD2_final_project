@@ -1,8 +1,213 @@
 html, body{
-    color: #fff;
-    background-color: #494949;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
 }
 a{
-    color: #fff;
+    color: #000;
     text-decoration: none;
+    box-shadow: 3px 3px 0px #000;
+    height: 17px;
+    padding: 5px;
+    outline: 1px solid black;
+    font-size: 14px;
+}
+p{
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+.title{
+    text-align: center;
+    padding: 5px;
+}
+.title span{
+    outline: 1px solid black;
+    padding: 5px;
+}
+
+
+
+.back_btn{
+    text-align: center;
+    padding: 5px;
+}
+
+
+
+
+.pagination {
+    float: right;
+    padding: 5px;
+    margin: -5px 5px 0 0;
+}
+
+.pagination ul{
+    list-style: none;
+    margin: 0;
+}
+.pagination ul li{
+    float: left;
+    padding: 0 5px;
+    /*margin-top: 5px;*/
+}
+
+
+
+
+.tables {
+    outline: 1px solid black;
+    padding: 5px;
+    margin: 15px auto;
+    max-width: 95%;
+}
+.tables td{
+    padding: 7px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+.tables thead td{
+    border-top: 1px solid black;
+}
+.tables td:last-child{
+    border-right: 1px solid black;
+}
+
+
+
+
+
+
+
+/*  login page  */
+
+.login_form{
+    outline: 1px solid black;
+    width: 200px;
+    padding: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+    text-align: center;
+}
+
+.login_form>.form input{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    width: 190px;
+    display: block;
+}
+
+.login_form>.form input[type="submit"]{
+    width: 200px;
+    box-shadow: 3px 3px 0px #000;
+}
+
+/*  index page  */
+
+.menu {
+    outline: 1px solid black;
+    margin: 0 15px 30px 15px;
+    padding: 0;
+    position: relative;
+    list-style: none;
+    height: 40px;
+    top: 15px;
+}
+
+.menu>li{
+    float: left;
+    padding: 5px;
+    margin-top: 5px;
+    transition: .2s;
+}
+.menu>li:last-child{
+    float: right;
+}
+.menu>li:hover{
+    margin-top: 7px;
+}
+
+/*  users   */
+.tab_users form{
+    float: left;
+}
+.tab_users input[type="submit"]{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+.tab_users tbody tr:last-child td a{
+    top: 5px;
+    position: relative;
+    left: 15px;
+}
+
+/*  add user    */
+
+.add_user_form {
+    outline: 1px solid black;
+    width: 200px;
+    padding: 15px;
+    position: relative;
+    text-align: center;
+    margin: 15px auto;
+}
+.add_user_form input, 
+.add_user_form select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    width: 190px;
+    display: block;
+}
+.add_user_form select{
+    width:  200px;
+}
+.add_user_form input[type="submit"]{
+    width: 200px;
+    box-shadow: 3px 3px 0px #000;
+}
+
+
+/*  comments    */
+
+.tab_comments input[type="submit"]{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
 }

@@ -15,7 +15,6 @@ public class PaginationUtilTest {
         Integer result = 0;
         Integer startElement = PaginationUtil.getStartElement(paginationDTO);
         Assertions.assertThat(startElement).isEqualByComparingTo(result);
-
     }
 
     @Test
@@ -27,7 +26,6 @@ public class PaginationUtilTest {
         Integer result = 10;
         Integer startElement = PaginationUtil.getStartElement(paginationDTO);
         Assertions.assertThat(startElement).isEqualByComparingTo(result);
-
     }
 
 }
