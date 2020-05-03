@@ -4,20 +4,26 @@
         <title>Login</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <!--<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>-->
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+
     </head>
     <body>
-        <div>Страница доступа</div>
-        <th:block th:if="${param.error}">
-            <p>Username or password has error</p>
-        </th:block>
-        <th:block th:if="${param.logout}">
-            <p>You are logout</p>
-        </th:block>
-        <form method="POST" th:action="@{/login}">
-            <span>Email: <input type="email" name="username"/></span><br/>
-            <span>Password: <input type="password" name="password"/></span><br/>
-            <input type="submit" value="Log In"/>
-        </form>
+        <div class="login_form">
+            <div class="errors">
+                <p th:if="${param.error}">Username or password has error</p>
+                <p th:if="${param.logout}">You are logout</p>
+            </div>
+            <div class="form">
+                <form method="POST" th:action="@{/login}">
+                    <p>Email</p>
+                    <p><input type="text" name="username"/></p>
+                    <br/>
+                    <p>Password</p>
+                    <p><input type="password" name="password"/></p>
+                    <br/>
+                    <input type="submit" value="Log In"/>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

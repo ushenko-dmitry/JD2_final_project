@@ -1,55 +1,76 @@
 <!DOCTYPE html>
-<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <title>Article</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Article</div>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Article</span></div>
 
-        <div class="article">
+        <table class="tables tab_article">
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Title</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">Name Surname</td>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block>
+                    <tr>
+                        <td th:text="${article.title}">Title</td>
+                        <td th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</td>
+                        <td th:if="${article.user.userDetails}" th:text="${article.user.userDetails.surname + ' ' + article.user.userDetails.name}">Name Surname</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="t_head center_align">Content</td> 
+                    </tr>
+                    <tr>
+                        <td colspan="3" th:text="${article.content}">Content</td> 
+                    </tr>
+                    <tr th:if="${#authentication.name == article.user.email}">
+                        <td colspan="3">
+                            <form method="GET" th:action="@{/articles/{id}/edit(id=${article.id})}">
+                                <input type="submit" value="Edit" />
+                            </form>
+                            <form method="POST" th:action="@{/articles/{id}/delete(id=${article.id})}">
+                                <p><input type="submit" value="Delete"/></p>
+                            </form>
+                        </td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
 
-            <div class="title">
-                <h3 th:text="${article.title}">Title</h3>
-            </div>
+        <table class="tables tab_article_comment">
+            <caption>Comments</caption>
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Name Surname</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">Comment</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comment : ${article.comments}">
+                    <td th:if="${comment.userDetails}" th:text="${comment.userDetails.surname + ' ' + comment.userDetails.name}">Name Surname</td>
+                    <td th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}">Date</td>
+                    <td th:text="${comment.comment}">Comment</td>
+                </tr>
+                <tr sec:authorize="hasRole('CUSTOMER_USER')">
+                    <td colspan="3">
+                        <a href="/articles" th:href="@{/articles/{id}/comments(id=${article.id})}">Add comment</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-            <div class="new_info">
-                <div class="new_date">
-                    <span th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</span>
-                </div>
-                <div class="new_author">
-                    <span th:text="${article.userDetails.name}">Name Surname</span>
-                </div>
-            </div>
-
-            <div class="content">
-                <span th:text="${article.content}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a malesuada erat. Praesent facilisis, tellus in euismod luctus, justo neque sodales massa, et sollicitudin diam sapien in elit. Aenean consequat leo vitae lorem elementum, non laoreet risus tincidunt. Cras faucibus non nibh sit amet fermentum. Nulla feugiat leo massa, vel. </span>
-            </div>
-
-        </div>
-        <hr/>
-
-        <div>
-            <span>Comments</span>
-            <div class="comments">
-                <div class="comment" th:each="comment : ${article.comments}">
-                    <div class="name">
-                        <span th:text="${comment.userDetails.name}"></span>
-                    </div>
-                    <div class="date">
-                        <span th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}"></span>
-                    </div>
-                    <div class="comment">
-                        <span th:text="${comment.comment}"></span>
-                    </div>
-                    <br/>
-                </div>
-            </div>
-        </div>
-
-
-        <p><a href="/articles" th:href="@{/articles}">Back</a></p>
+        <br/>
+        <div class="back_btn"><a href="/articles" th:href="@{/articles}">Back</a></div>
     </body>
 </html>

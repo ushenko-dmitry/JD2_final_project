@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Basket</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Basket</span></div>
+        <table class="tables tab_basket">
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Number</td>
+                    <td class="t_head center_align">Status</td>
+                    <td class="t_head center_align">Name</td>
+                    <td class="t_head center_align">Customer Id</td>
+                    <td class="t_head center_align">Customer Phone</td>
+                    <td class="t_head center_align">Amount</td>
+                    <td class="t_head center_align">Price</td>
+                    <td class="t_head center_align">Edit</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:object="${basket}">
+                    <td th:text="*{id}">Number</td>
+                    <td th:text="*{orderStatus}">Status</td>
+                    <td th:text="*{orderedItem.name}">Name</td>
+                    <td th:text="*{userId}">Customer Id</td>
+                    <td th:text="*{userPhone}">Customer Phone</td>
+                    <td th:text="*{orderedItem.amount}">Amount</td>
+                    <td th:text="*{orderedItem.price * orderedItem.amount}">Price</td>
+                    <td><a href="/baskets" th:href="@{/baskets/{id}/edit(id = ${basket.id})}">Edit</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="back_btn"><a href="/baskets" th:href="@{/baskets}">Back</a></div>
+    </body>
+</html>

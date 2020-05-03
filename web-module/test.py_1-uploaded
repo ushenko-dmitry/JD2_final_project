@@ -1,0 +1,13 @@
+import requests
+import json
+
+url = "http://api.openweathermap.org/data/2.5/weather?q=Minsk&lang=ru&appid=cc84cce5c929b0c5bb652de987481491&units=metric"
+
+response = requests.get(url)
+data = json.loads(response.text)
+
+temp = data['main']['temp']
+weather_id = data['weather'][0]['id'] 
+weather_desc = data['weather'][0]['description']
+
+print(temp, " | ", weather_desc)

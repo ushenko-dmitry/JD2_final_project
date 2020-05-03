@@ -1,8 +1,443 @@
 html, body{
-    color: #fff;
-    background-color: #494949;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
 }
 a{
-    color: #fff;
+    color: #000;
     text-decoration: none;
+    box-shadow: 3px 3px 0px #000;
+    height: 17px;
+    padding: 5px;
+    outline: 1px solid black;
+    font-size: 14px;
+}
+p{
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+.title{
+    text-align: center;
+    padding: 5px;
+}
+.title span{
+    outline: 1px solid black;
+    padding: 5px;
+}
+
+
+
+.back_btn{
+    text-align: center;
+    padding: 5px;
+}
+
+
+
+
+.pagination {
+    float: right;
+    padding: 5px;
+    margin: -5px 5px 0 0;
+}
+
+.pagination ul{
+    list-style: none;
+    margin: 0;
+}
+.pagination ul li{
+    float: left;
+    padding: 0 5px;
+    /*margin-top: 5px;*/
+}
+
+
+
+
+.tables {
+    outline: 1px solid black;
+    padding: 5px;
+    margin: 15px auto;
+    max-width: 95%;
+}
+.tables td{
+    padding: 7px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+.tables thead td{
+    border-top: 1px solid black;
+}
+.tables td:last-child{
+    border-right: 1px solid black;
+}
+.t_head{
+    background: #eee;
+}
+
+
+
+
+
+
+/*  login page  */
+
+.login_form{
+    outline: 1px solid black;
+    width: 200px;
+    padding: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+    text-align: center;
+}
+
+.login_form>.form input{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    width: 190px;
+    display: block;
+}
+
+.login_form>.form input[type="submit"]{
+    width: 200px;
+    box-shadow: 3px 3px 0px #000;
+}
+
+/*  index page  */
+
+.menu {
+    outline: 1px solid black;
+    margin: 0 15px 30px 15px;
+    padding: 0;
+    position: relative;
+    list-style: none;
+    height: 40px;
+    top: 15px;
+}
+
+.menu>li{
+    float: left;
+    padding: 5px;
+    margin-top: 5px;
+    transition: .2s;
+}
+.menu>li:last-child{
+    float: right;
+}
+.menu>li:hover{
+    margin-top: 7px;
+}
+
+/*  users   */
+.tab_users form{
+    float: left;
+}
+.tab_users input[type="submit"]{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+.tab_users tbody tr:last-child td a{
+    top: 5px;
+    position: relative;
+    left: 15px;
+}
+
+/*  add user    */
+
+.add_user_form {
+    outline: 1px solid black;
+    width: 200px;
+    padding: 15px;
+    position: relative;
+    text-align: center;
+    margin: 15px auto;
+}
+.add_user_form input, 
+.add_user_form select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    width: 190px;
+    display: block;
+}
+.add_user_form select{
+    width:  200px;
+}
+.add_user_form input[type="submit"]{
+    width: 200px;
+    box-shadow: 3px 3px 0px #000;
+}
+
+
+/*  comments    */
+
+.tab_comments input[type="submit"]{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+
+
+/*  Items   */
+.tab_items input[type="submit"]{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+.fileform { 
+    border: 1px solid #000;
+    cursor: pointer;
+    height: 26px;
+    overflow: hidden;
+    padding: 2px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 230px;
+    float: left;
+    margin-right: 5px;
+}
+
+.fileform .selectbutton { 
+    border: 1px solid #000;
+    color: #000;
+    float: right;
+    font-size: 16px;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 2px 6px;
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+}
+
+.fileform input[type="file"]{
+    position:absolute; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    -moz-opacity: 0; 
+    filter: alpha(opacity=0); 
+    opacity: 0; 
+    font-size: 150px; 
+    height: 30px; 
+    z-index:20;
+}
+.fileform #fileformlabel { 
+    background-color: #FFFFFF;
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    padding: 2px;
+    text-align: left;
+    vertical-align: middle;
+    width:160px;
+}
+/*  item    */
+.center_align {
+    text-align: center;
+}
+.tab_item input{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+}
+.tab_item input[type="number"]{
+    float: left;
+    margin-right: 5px;
+}
+.tab_item input[type="submit"]{
+    box-shadow: 3px 3px 0px #000;
+}
+/*  basket edit */
+.tab_basket_edit input[type="submit"]{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+.tab_basket_edit select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+}
+/*  profile */
+.profile {
+    outline: 1px solid black;
+    width: 200px;
+    padding: 15px;
+    position: relative;
+    text-align: center;
+    margin: 15px auto;
+}
+.profile input, 
+.profile select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    width: 190px;
+    display: block;
+}
+.profile select{
+    width:  200px;
+}
+.profile input[type="submit"]{
+    width: 200px;
+    box-shadow: 3px 3px 0px #000;
+}
+
+/*  articles    */
+.tab_articles tr:last-child a{
+    float: left;
+    margin-right: 15px;
+}
+.tab_articles tr:last-child input{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+
+.articles_pagination {
+    float: none;
+    text-align: center;
+}
+.articles_pagination ul{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.tab_article tr:last-child input{
+    float: left;
+    margin-right: 15px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+
+.add_comment {
+    padding: 5px;
+}
+.add_comment textarea{
+    width: 100%;
+    height: 64px;
+}
+.add_comment input{
+    float: left;
+    margin-right: 15px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
+}
+
+.tab_article_comment input{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: 1px solid black;
+    border: none;
+    cursor: pointer;
+    background: white;
+    padding: 5px;
+    font-size: 14px;
+    display: block;
+    box-shadow: 3px 3px 0px #000;
 }

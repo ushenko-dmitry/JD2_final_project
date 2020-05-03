@@ -5,16 +5,10 @@ import org.springframework.stereotype.Component;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
-import ru.mail.dimaushenko.service.utils.PaginationUtil;
+import static ru.mail.dimaushenko.service.utils.PaginationUtil.getStartElement;
 
 @Component
 public class PaginationConverterImpl implements PaginationConverter {
-
-    private final PaginationUtil paginationUtil;
-
-    public PaginationConverterImpl(PaginationUtil paginationUtil) {
-        this.paginationUtil = paginationUtil;
-    }
 
     @Override
     public PaginationDTO getDTOFromObject(Pagination model) {
@@ -29,7 +23,7 @@ public class PaginationConverterImpl implements PaginationConverter {
     @Override
     public Pagination getObjectFromDTO(PaginationDTO paginationDTO) {
         Pagination pagination = new Pagination();
-        Integer startElement = paginationUtil.getStartElement(paginationDTO);
+        Integer startElement = getStartElement(paginationDTO);
         pagination.setStartElement(startElement);
         pagination.setElementsPerPage(paginationDTO.getElementsPerPage());
         return pagination;

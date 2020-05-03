@@ -3,6 +3,7 @@ package ru.mail.dimaushenko.repository.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class Comment implements Serializable {
     private Date creationDate;
     @Column(name = "is_visible")
     private Boolean isVisible;
-    @ManyToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne(fetch = LAZY, cascade = ALL)

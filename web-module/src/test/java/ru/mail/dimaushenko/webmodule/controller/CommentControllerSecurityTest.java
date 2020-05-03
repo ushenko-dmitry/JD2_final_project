@@ -22,6 +22,8 @@ import org.springframework.web.context.WebApplicationContext;
 @AutoConfigureMockMvc
 public class CommentControllerSecurityTest {
 
+    private static final int MOVED_TEMPORARILY = 302;
+    
     @Autowired
     private WebApplicationContext context;
 
@@ -41,7 +43,7 @@ public class CommentControllerSecurityTest {
         mockMvc.perform(get("/comments").
                 contentType(MediaType.TEXT_HTML)).
                 andExpect(status().
-                        is(302)
+                        is(MOVED_TEMPORARILY)
                 );
     }
 
@@ -90,7 +92,7 @@ public class CommentControllerSecurityTest {
         mockMvc.perform(post("/comments/1/delete").
                 contentType(MediaType.TEXT_HTML)).
                 andExpect(status().
-                        is(302)
+                        is(MOVED_TEMPORARILY)
                 );
     }
 

@@ -1,15 +1,21 @@
 package ru.mail.dimaushenko.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import ru.mail.dimaushenko.repository.ArticleRepository;
 import ru.mail.dimaushenko.repository.CommentRepository;
+import ru.mail.dimaushenko.repository.UserRepository;
+import ru.mail.dimaushenko.repository.model.Article;
 import ru.mail.dimaushenko.repository.model.Comment;
 import ru.mail.dimaushenko.repository.model.Pagination;
+import ru.mail.dimaushenko.repository.model.User;
 import ru.mail.dimaushenko.service.CommentService;
 import ru.mail.dimaushenko.service.converter.CommentConverter;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
+import ru.mail.dimaushenko.service.model.AddCommentDTO;
 import ru.mail.dimaushenko.service.model.CommentDTO;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 
@@ -18,13 +24,19 @@ import ru.mail.dimaushenko.service.model.PaginationDTO;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
+    private final ArticleRepository articleRepository;
     private final ConverterFacade converterFacade;
 
     public CommentServiceImpl(
             CommentRepository commentRepository,
+            UserRepository userRepository,
+            ArticleRepository articleRepository,
             ConverterFacade converterFacade
     ) {
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
+        this.articleRepository = articleRepository;
         this.converterFacade = converterFacade;
     }
 
@@ -49,6 +61,25 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Integer getAmountComments() {
         return commentRepository.getAmountElements();
+    }
+
+    @Override
+    public CommentDTO getCommentById(Long commentId) {
+        Comment comment = commentRepository.findById(commentId);
+        return converterFacade.getCommentConverter().getDTOFromObject(comment);
+    }
+
+    @Override
+    public void addComment(AddCommentDTO addCommentDTO) {
+        Comment comment = new Comment();
+        comment.setComment(addCommentDTO.getComment());
+        User user = userRepository.findById(addCommentDTO.getUserId());
+        Article article = articleRepository.findById(addCommentDTO.getArticleId());
+        comment.setUser(user);
+        comment.setArticle(article);
+        comment.setCreationDate(new Date(System.currentTimeMillis()));
+        comment.setIsVisible(true);
+        commentRepository.persist(comment);
     }
 
 }

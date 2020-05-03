@@ -33,7 +33,7 @@ public class ArticleConverterImpl implements ArticleConverter {
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setId(article.getId());
         UserDTO userDTO = userConverter.getDTOFromObject(article.getUser());
-        articleDTO.setUserDetails(userDTO.getUserDetails());
+        articleDTO.setUser(userDTO);
         articleDTO.setTitle(article.getTitle());
         articleDTO.setContent(article.getContent());
         articleDTO.setDate(article.getDate());
@@ -90,7 +90,7 @@ public class ArticleConverterImpl implements ArticleConverter {
         }
         articlePreviewDTO.setDate(article.getDate());
         UserDTO userDTO = userConverter.getDTOFromObject(article.getUser());
-        articlePreviewDTO.setUserDetails(userDTO.getUserDetails());
+        articlePreviewDTO.setUser(userDTO);
         return articlePreviewDTO;
     }
 

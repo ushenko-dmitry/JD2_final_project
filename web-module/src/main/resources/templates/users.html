@@ -4,19 +4,21 @@
         <title>Users</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+        <script th:src="@{/js/user_delete.js}"></script>
     </head>
     <body>
-        <div>Пользователи</div>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Users</span></div>
 
-        <table border="1">
+        <table class="tables tab_users">
             <thead>
                 <tr>
-                    <td></td>
-                    <td>Full name</td>
-                    <td>Email</td>
-                    <td>Role</td>
-                    <td>Edit</td>
+                    <td class="t_head center_align"></td>
+                    <td class="t_head center_align">Full name</td>
+                    <td class="t_head center_align">Email</td>
+                    <td class="t_head center_align">Role</td>
+                    <td class="t_head center_align">Edit</td>
                 </tr>
             </thead>
             <tbody>
@@ -27,23 +29,27 @@
                     <td th:text="${user.role}">role</td>
                     <td><a th:href="@{/users/{id}/update(id=${user.id})}">Edit</a></td>
                 </tr>
+                <tr>
+                    <td colspan="5">
+                        <form method="POST" th:action="@{/users/delete}">
+                            <div id="delete_inputs"></div>
+                            <input type="submit" value="Delete"/>
+                        </form>
+                        <a href="/users/add" th:href="@{/users/add}">Add user</a>
+                        <div class="pagination" th:if="${#lists.size(viewUsers.pagination.pageNumbers)} > 1">
+                            <ul>
+                                <li th:each="pageNumber : ${viewUsers.pagination.pageNumbers}"><a th:href="@{/users(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewUsers.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
-        <form method="POST" th:action="@{/users/delete}">
-            <div id="delete_inputs">
 
-            </div>
-            <input type="submit" value="delete"/>
-        </form>
 
-        <div th:if="${#lists.size(viewUsers.pagination.pageNumbers)} > 1">
-            <ul th:each="pageNumber : ${viewUsers.pagination.pageNumbers}">
-                <li><a th:href="@{/users(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewUsers.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
-            </ul>
-        </div>
 
-        <a href="/users/add" th:href="@{/users/add}">Add User</a>
+
+        <div class="back_btn"><a href="/" th:href="@{/}">Back</a></div>
     </body>
-    <script th:src="@{/js/user_delete.js}"></script>
 </html>

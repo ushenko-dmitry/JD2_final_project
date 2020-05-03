@@ -89,7 +89,7 @@ public class UserController {
 
         UserDTO user = userService.getUserById(id);
         model.addAttribute("user", user);
-        return "user_update";
+        return "redirect:/users/" + id + "/update?reset=true";
     }
 
     @PostMapping("/delete")
@@ -128,7 +128,7 @@ public class UserController {
             pagination.getPageNumbers().add(i);
         }
         if (pagination.getPageNumbers().size() < pagination.getCurrentPage()) {
-            pagination.setCurrentPage(1);
+            pagination.setCurrentPage(DEFAULT_CURRENT_PAGE);
         }
         return pagination;
     }

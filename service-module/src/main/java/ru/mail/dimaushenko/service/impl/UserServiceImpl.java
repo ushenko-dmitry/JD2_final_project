@@ -6,15 +6,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.mail.dimaushenko.repository.CommentRepository;
 import ru.mail.dimaushenko.repository.UserRepository;
 import static ru.mail.dimaushenko.repository.constants.SortOrderEnum.ASC;
 import ru.mail.dimaushenko.repository.constants.UserRoleEnum;
 import static ru.mail.dimaushenko.repository.constants.UserRoleEnum.ADMINISTRATOR;
 import ru.mail.dimaushenko.repository.model.Pagination;
 import ru.mail.dimaushenko.repository.model.User;
-import ru.mail.dimaushenko.service.CommentService;
 import ru.mail.dimaushenko.service.UserService;
+import ru.mail.dimaushenko.service.components.SentEmailComponent;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
 import ru.mail.dimaushenko.service.converter.UserConverter;
@@ -27,36 +26,26 @@ import ru.mail.dimaushenko.service.model.UserDTO;
 import ru.mail.dimaushenko.service.model.UserPasswordDTO;
 import ru.mail.dimaushenko.service.model.UserProfileDTO;
 import ru.mail.dimaushenko.service.model.UserRoleEnumDTO;
-import ru.mail.dimaushenko.service.utils.PasswordUtil;
-import ru.mail.dimaushenko.service.utils.SentEmailUtil;
+import static ru.mail.dimaushenko.service.utils.PasswordUtil.generatePassword;
 
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final CommentRepository commentRepository;
-    private final CommentService commentService;
     private final ConverterFacade converterFacade;
-    private final SentEmailUtil emailUtil;
-    private final PasswordUtil passwordUtil;
+    private final SentEmailComponent emailUtil;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(
             UserRepository userRepository,
-            CommentRepository commentRepository,
-            CommentService commentService,
             ConverterFacade converterFacade,
-            SentEmailUtil emailUtil,
-            PasswordUtil passwordUtil,
+            SentEmailComponent emailUtil,
             PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
-        this.commentRepository = commentRepository;
-        this.commentService = commentService;
         this.converterFacade = converterFacade;
         this.emailUtil = emailUtil;
-        this.passwordUtil = passwordUtil;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -75,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO addUser(AddUserDTO addUser) {
-        String password = passwordUtil.generatePassword();
+        String password = generatePassword();
         addUser.setPassword(password);
         UserConverter userConverter = converterFacade.getUserConverter();
         User user = userConverter.getObjectFromDTO(addUser);
@@ -153,7 +142,7 @@ public class UserServiceImpl implements UserService {
     public boolean resetPassword(Long id) {
         User user = userRepository.findById(id);
         String passwordBuckup = user.getPassword();
-        String password = passwordUtil.generatePassword();
+        String password = generatePassword();
         user.setPassword(passwordEncoder.encode(password));
         String to = user.getEmail();
         String subject = "your password was reseted";

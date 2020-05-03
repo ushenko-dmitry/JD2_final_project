@@ -16,4 +16,22 @@ public interface ConverterFacade {
 
     ArticleConverter getArticleConverter();
 
+    ItemConverter getItemConverter();
+
+    ItemDetailsConverter getItemDetailsConverter();
+
+    ItemPreviewConverter getItemPreviewConverter();
+
+    ItemXMLConverter getItemXMLConverter();
+
+    AddItemConverter getAddItemConverter();
+
+    BasketConverter getBasketConverter();
+
+    AddBasketConverter getAddBasketConverter();
+
+    BasketPreviewConverter getBasketPreviewConverter();
+
+    OrderedItemConverter getOrderedItemConverter();
+
 }
