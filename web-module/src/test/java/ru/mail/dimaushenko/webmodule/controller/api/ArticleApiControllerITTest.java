@@ -36,7 +36,7 @@ public class ArticleApiControllerITTest {
                 .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].title").value("article test"))
                 .andExpect(jsonPath("$[0].content").value("Some text"))
-                .andExpect(jsonPath("$[0].date").value("2020-04-29T10:28:53.000+0000"));
+                .andExpect(jsonPath("$[0].date").isNotEmpty());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ArticleApiControllerITTest {
                 .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.title").value("article test"))
                 .andExpect(jsonPath("$.content").value("Some text"))
-                .andExpect(jsonPath("$.date").value("2020-04-29T10:28:53.000+0000"));
+                .andExpect(jsonPath("$.date").isNotEmpty());
     }
 
     @Test
