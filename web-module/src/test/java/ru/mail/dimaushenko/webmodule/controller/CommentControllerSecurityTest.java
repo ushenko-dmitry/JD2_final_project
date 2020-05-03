@@ -20,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(value = "/application-test.properties")
 @AutoConfigureMockMvc
+@Disabled
 public class CommentControllerSecurityTest {
 
     private static final int MOVED_TEMPORARILY = 302;
