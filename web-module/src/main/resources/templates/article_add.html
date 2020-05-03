@@ -4,15 +4,20 @@
         <title>Add Article</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" href="/css/style.css" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Add Article</div>
-        <form method="POST" action="/articles/add" th:action="@{/articles/add}" th:object="${newArticle}">
-            <p>Title: <input type="text" name="title" th:field="*{title}"/></p>
-            <p>Content: <textarea name="content" th:field="*{content}"></textarea></p>
-            <!--<p>Publication date: <input type="date" name="publicatedDate" th:field="*{publicatedDate}"/></p>-->
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Add article</span></div>
+        <form class="add_user_form" method="POST" action="/articles/add" th:action="@{/articles/add}" th:object="${newArticle}">
+            <p>Title</p>
+            <p><input type="text" name="title" th:field="*{title}"/></p>
+            <br/>
+            <p>Content</p>
+            <p><textarea name="content" th:field="*{content}"></textarea></p>
+            <br/>
             <p><input type="submit" value="Create"/></p>
         </form>
+        <div class="back_btn"><a href="/articles" th:href="@{/articles}">Back</a></div>
     </body>
 </html>

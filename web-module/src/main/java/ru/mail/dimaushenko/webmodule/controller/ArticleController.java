@@ -63,11 +63,9 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public String getArticle(
-            @PathVariable(name = "id") String idStr,
+            @PathVariable(name = "id") Long id,
             Model model
     ) {
-        System.out.println(idStr);
-        long id = Long.parseLong(idStr);
         ArticleDTO article = articleService.getArticle(id);
         model.addAttribute("article", article);
         return "article";
@@ -173,6 +171,8 @@ public class ArticleController {
             @PathVariable(name = "id") Long articleId,
             Model model
     ) {
+        ArticleDTO article = articleService.getArticle(articleId);
+        model.addAttribute("article", article);
         AddCommentDTO addCommentDTO = new AddCommentDTO();
         addCommentDTO.setArticleId(articleId);
         model.addAttribute("new_comment", addCommentDTO);

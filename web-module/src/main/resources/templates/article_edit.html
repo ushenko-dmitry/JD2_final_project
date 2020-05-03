@@ -6,57 +6,53 @@
         <title>Article edit</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Article</div>
-        <form method="POST" th:action="@{/articles/{id}/edit(id=${article.id})}" th:object="${article}">
-            <div class="article">
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Article</span></div>
 
-                <div class="title">
-                    <input type="text" th:field="*{title}"/>
-                </div>
-
-                <div class="new_info">
-                    <div class="new_date">
-                        <span th:text="*{#dates.format(date, 'dd-MMM-yyyy HH:mm')}">Date</span>
-                    </div>
-                    <div class="new_author">
-                        <span th:text="*{user.userDetails.name}">Name Surname</span>
-                    </div>
-                </div>
-
-                <div class="content">
-                    <textarea th:field="*{content}"></textarea>
-                </div>
-
-            </div>
+        <form class="add_user_form" method="POST" th:action="@{/articles/{id}/edit(id=${article.id})}" th:object="${article}">
+            <p>Title</p>
+            <p><input type="text" name="title" th:field="*{title}"/></p>
+            <br/>
+            <p>Content</p>
+            <p><textarea name="content" th:field="*{content}"></textarea></p>
+            <br/>
+            <p>Author</p>
+            <p><input type="text" th:value="*{user.userDetails.surname + ' ' + user.userDetails.name}" disabled=""/></p>
+            <br/>
+            <p>Date</p>
+            <p><input type="text" th:value="*{#dates.format(date, 'dd-MMM-yyyy HH:mm')}" disabled=""/></p>
+            <br/>
             <input type="submit" value="Save"/>
         </form>
-        <hr/>
 
-        <div>
-            <span>Comments</span>
-            <div class="comments">
-                <div class="comment" th:each="comment : ${article.comments}">
-                    <div class="name">
-                        <span th:if="${comment.userDetails}" th:text="${comment.userDetails.surname + ' ' + comment.userDetails.name}">Name Surname</span>
-                    </div>
-                    <div class="date">
-                        <span th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}"></span>
-                    </div>
-                    <div class="comment">
-                        <span th:text="${comment.comment}"></span>
-                    </div>
-                    <br/>
-                    <form method="POST" th:action="@{/articles/{article_id}/comments/{comment_id}/delete(article_id=${article.id}, comment_id=${comment.id})}">
-                        <input type="submit" value="Delete"/>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <table class="tables tab_article_comment">
+            <caption>Comments</caption>
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Name Surname</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">Comment</td>
+                    <td class="t_head center_align">Delete</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comment : ${article.comments}">
+                    <td th:if="${comment.userDetails}" th:text="${comment.userDetails.surname + ' ' + comment.userDetails.name}">Name Surname</td>
+                    <td th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}">Date</td>
+                    <td th:text="${comment.comment}">Comment</td>
+                    <td>
+                        <form method="POST" th:action="@{/articles/{article_id}/comments/{comment_id}/delete(article_id=${article.id}, comment_id=${comment.id})}">
+                            <input type="submit" value="Delete"/>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-
-        <p><a href="/articles" th:href="@{/articles/{id}(id=${article.id})}">Back</a></p>
+        <br/>
+        <div class="back_btn"><a href="/articles" th:href="@{/articles/{id}(id=${article.id})}">Back</a></div>
     </body>
 </html>

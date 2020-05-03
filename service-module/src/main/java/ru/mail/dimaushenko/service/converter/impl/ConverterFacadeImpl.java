@@ -11,6 +11,7 @@ import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.ItemConverter;
 import ru.mail.dimaushenko.service.converter.ItemDetailsConverter;
 import ru.mail.dimaushenko.service.converter.ItemPreviewConverter;
+import ru.mail.dimaushenko.service.converter.ItemXMLConverter;
 import ru.mail.dimaushenko.service.converter.OrderedItemConverter;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
 import ru.mail.dimaushenko.service.converter.UserConverter;
@@ -31,6 +32,7 @@ public class ConverterFacadeImpl implements ConverterFacade {
     private final ItemConverter itemConverter;
     private final ItemDetailsConverter itemDetailsConverter;
     private final ItemPreviewConverter itemPreviewConverter;
+    private final ItemXMLConverter itemXMLConverter;
     private final AddItemConverter addItemConverter;
     private final BasketConverter basketConverter;
     private final AddBasketConverter addBasketConverter;
@@ -48,6 +50,7 @@ public class ConverterFacadeImpl implements ConverterFacade {
             ItemConverter itemConverter,
             ItemDetailsConverter itemDetailsConverter,
             ItemPreviewConverter itemPreviewConverter,
+            ItemXMLConverter itemXMLConverter,
             AddItemConverter addItemConverter,
             BasketConverter basketConverter,
             AddBasketConverter addBasketConverter,
@@ -64,6 +67,7 @@ public class ConverterFacadeImpl implements ConverterFacade {
         this.itemConverter = itemConverter;
         this.itemDetailsConverter = itemDetailsConverter;
         this.itemPreviewConverter = itemPreviewConverter;
+        this.itemXMLConverter = itemXMLConverter;
         this.addItemConverter = addItemConverter;
         this.basketConverter = basketConverter;
         this.addBasketConverter = addBasketConverter;
@@ -124,6 +128,11 @@ public class ConverterFacadeImpl implements ConverterFacade {
     @Override
     public AddItemConverter getAddItemConverter() {
         return addItemConverter;
+    }
+
+    @Override
+    public ItemXMLConverter getItemXMLConverter() {
+        return itemXMLConverter;
     }
 
     @Override

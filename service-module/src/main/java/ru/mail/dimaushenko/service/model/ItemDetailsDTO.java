@@ -1,10 +1,12 @@
 package ru.mail.dimaushenko.service.model;
 
 import java.util.Objects;
+import javax.validation.constraints.Size;
 
 public class ItemDetailsDTO {
 
     private Long itemId;
+    @Size(min = 1, max = 200, message = "the description must be from 1 to 200")
     private String description;
 
     public Long getItemId() {

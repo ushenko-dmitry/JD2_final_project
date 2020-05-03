@@ -10,9 +10,13 @@
         <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
         <div class="title"><span>Update user</span></div>
         <th:block th:if="${param.error}">
-            <p>Error with update user</p>
+            <br/>
+            <div class="title"><span>Error with update user</span></div>
         </th:block>
-        <p th:if="${param.reset[0]} == 'true'">Password was successfully reset</p>
+        <th:block th:if="${param.reset}">
+            <br/>
+            <div class="title"><span th:if="${param.reset[0]} == 'true'">Password was successfully reset</span></div>
+        </th:block>
         <div class="add_user_form">
             <form method="POST" th:action="@{/users/{id}/update(id=${user.id})}" th:object="${user}">
                 <p>Surname</p>

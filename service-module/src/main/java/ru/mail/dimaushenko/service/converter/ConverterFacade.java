@@ -22,6 +22,8 @@ public interface ConverterFacade {
 
     ItemPreviewConverter getItemPreviewConverter();
 
+    ItemXMLConverter getItemXMLConverter();
+
     AddItemConverter getAddItemConverter();
 
     BasketConverter getBasketConverter();

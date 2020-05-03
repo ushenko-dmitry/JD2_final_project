@@ -10,9 +10,11 @@ import ru.mail.dimaushenko.service.model.PaginationDTO;
 
 public interface ItemService {
 
+    void addItemFromFile(String userEmail, String filename);
+
     void addToBusket(AddBasketDTO addBusket);
 
-    Boolean copyItem(ItemDTO item);
+    ItemDTO copyItem(ItemDTO item);
 
     Integer getAmountItems();
 
@@ -25,6 +27,8 @@ public interface ItemService {
     ItemDTO getItem(UUID uuid);
 
     ItemDTO getItem(Long id);
+
+    ItemDTO updateItem(ItemDTO itemDTO);
 
     Boolean deleteItem(Long id);
 

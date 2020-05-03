@@ -3,14 +3,18 @@ package ru.mail.dimaushenko.service.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 public class ItemDTO {
 
     private Long id;
     private UUID uuid;
     private UserDTO user;
+    @Size(min = 1, message = "the description must be from 1 to 255")
     private String name;
     private ItemDetailsDTO itemDetails;
+    @Min(value = 0, message = "the price cannot be less than zero")
     private BigDecimal price;
 
     public Long getId() {

@@ -13,11 +13,11 @@
         <table class="tables tab_comments">
             <thead>
                 <tr>
-                    <td>Full name</td>
-                    <td>Comment</td>
-                    <td>Date</td>
-                    <td>View</td>
-                    <td>Remove</td>
+                    <td class="t_head center_align">Full name</td>
+                    <td class="t_head center_align">Comment</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">View</td>
+                    <td class="t_head center_align">Remove</td>
                 </tr>
             </thead>
             <tbody>
@@ -32,9 +32,9 @@
                         </form>
                     </td>
                 </tr>
-                <tr>
+                <tr th:if="${#lists.size(viewComments.pagination.pageNumbers)} > 1">
                     <td colspan="5">
-                        <div class="pagination" th:if="${#lists.size(viewComments.pagination.pageNumbers)} > 1">
+                        <div class="pagination">
                             <ul>
                                 <li th:each="pageNumber : ${viewComments.pagination.pageNumbers}"><a th:href="@{/comments(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewComments.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
                             </ul>

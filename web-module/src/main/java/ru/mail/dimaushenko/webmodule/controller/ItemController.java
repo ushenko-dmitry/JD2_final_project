@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import static java.util.UUID.fromString;
 import javax.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -25,11 +26,9 @@ import ru.mail.dimaushenko.service.model.AddBasketDTO;
 import ru.mail.dimaushenko.service.model.AppUser;
 import ru.mail.dimaushenko.service.model.ItemDTO;
 import ru.mail.dimaushenko.service.model.ItemPreviewDTO;
-import ru.mail.dimaushenko.service.model.ItemXmlDTOList;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
 import ru.mail.dimaushenko.service.model.UserDTO;
 import ru.mail.dimaushenko.service.model.ViewItemsDTO;
-import static ru.mail.dimaushenko.service.utils.XmlParserUtil.getItemXmlDTO;
 import static ru.mail.dimaushenko.webmodule.constants.PaginationConstants.DEFAULT_CURRENT_PAGE;
 import static ru.mail.dimaushenko.webmodule.constants.PaginationConstants.DEFAULT_ITEMS_PER_PAGE;
 
@@ -75,14 +74,31 @@ public class ItemController {
     @PostMapping("/{uuid}/copy")
     public String copyItem(
             @PathVariable(name = "uuid") String uuidSrt,
-            Authentication authentication
+            Authentication authentication,
+            Model model
     ) {
         AppUser appUser = (AppUser) authentication.getPrincipal();
         UserDTO user = userService.getUserByEmail(appUser.getUsername());
         ItemDTO item = itemService.getItem(UUID.fromString(uuidSrt));
         item.setUser(user);
-        itemService.copyItem(item);
-        return "redirect:/items";
+        ItemDTO copyItem = itemService.copyItem(item);
+        model.addAttribute("item", copyItem);
+        return "item_edit";
+    }
+
+    @PostMapping("/{uuid}/save")
+    public String saveItem(
+            @PathVariable(name = "uuid") String uuidSrt,
+            @Valid @ModelAttribute ItemDTO itemDTO,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        itemDTO.setUuid(fromString(uuidSrt));
+        if (bindingResult.hasErrors()) {
+            return "item_edit";
+        }
+        ItemDTO item = itemService.updateItem(itemDTO);
+        return "redirect:/items/{uuid}";
     }
 
     @PostMapping("/{uuid}/delete")
@@ -111,27 +127,27 @@ public class ItemController {
 
     @PostMapping("/upload")
     public String uploadFile(
-            @RequestParam("name") String name,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("file") MultipartFile file,
+            Authentication authentication
     ) {
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                String filename = name + "-uploaded";
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filename)));
-                stream.write(bytes);
-                stream.close();
-                System.out.println("Вы удачно загрузили " + name + " в " + name + "-uploaded !");
-                ItemXmlDTOList itemXmlDTOList = getItemXmlDTO(filename);
-                System.out.println(itemXmlDTOList.getItems());
-            } catch (Exception e) {
-                System.out.println("Вам не удалось загрузить " + name + " => " + e.getMessage());
-                e.printStackTrace();
+        if (file.getContentType().equals("text/xml")) {
+            AppUser appUser = (AppUser) authentication.getPrincipal();
+            if (!file.isEmpty()) {
+                try {
+                    byte[] bytes = file.getBytes();
+                    String filename = file.getOriginalFilename();
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filename)));
+                    stream.write(bytes);
+                    stream.close();
+                    System.out.println("Вы удачно загрузили " + filename);
+                    itemService.addItemFromFile(appUser.getUsername(), filename);
+                } catch (Exception e) {
+                    System.out.println("Вам не удалось загрузить " + file.getOriginalFilename() + " => " + e.getMessage());
+                }
+            } else {
+                System.out.println("Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.");
             }
-        } else {
-            System.out.println("Вам не удалось загрузить " + name + " потому что файл пустой.");
         }
-
         return "redirect:/items";
     }
 

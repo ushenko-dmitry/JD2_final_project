@@ -19,12 +19,16 @@ import ru.mail.dimaushenko.service.converter.AddItemConverter;
 import ru.mail.dimaushenko.service.converter.ConverterFacade;
 import ru.mail.dimaushenko.service.converter.ItemConverter;
 import ru.mail.dimaushenko.service.converter.ItemPreviewConverter;
+import ru.mail.dimaushenko.service.converter.ItemXMLConverter;
 import ru.mail.dimaushenko.service.converter.PaginationConverter;
 import ru.mail.dimaushenko.service.model.AddBasketDTO;
 import ru.mail.dimaushenko.service.model.AddItemDTO;
 import ru.mail.dimaushenko.service.model.ItemDTO;
 import ru.mail.dimaushenko.service.model.ItemPreviewDTO;
+import ru.mail.dimaushenko.service.model.ItemXmlDTO;
+import ru.mail.dimaushenko.service.model.ItemXmlDTOList;
 import ru.mail.dimaushenko.service.model.PaginationDTO;
+import static ru.mail.dimaushenko.service.utils.XmlParserUtil.getItemXmlDTO;
 
 @Service
 @Transactional
@@ -45,6 +49,18 @@ public class ItemServiceImpl implements ItemService {
         this.userRepository = userRepository;
         this.basketRepository = basketRepository;
         this.converterFacade = converterFacade;
+    }
+
+    @Override
+    public void addItemFromFile(String userEmail, String filename) {
+        User user = userRepository.getUserByEmail(userEmail);
+        ItemXmlDTOList itemXmlDTOList = getItemXmlDTO(filename);
+        ItemXMLConverter itemXMLConverter = converterFacade.getItemXMLConverter();
+        for (ItemXmlDTO itemDTO : itemXmlDTOList.getItems()) {
+            Item item = itemXMLConverter.getObjectFromDTO(itemDTO);
+            item.setUser(user);
+            itemRepository.persist(item);
+        }
     }
 
     @Override
@@ -110,7 +126,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Boolean copyItem(ItemDTO itemDTO) {
+    public ItemDTO copyItem(ItemDTO itemDTO) {
         itemDTO.setUuid(randomUUID());
         ItemConverter itemConverter = converterFacade.getItemConverter();
         Item item = itemConverter.getObjectFromDTO(itemDTO);
@@ -119,7 +135,7 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findById(item.getUser().getId());
         item.setUser(user);
         itemRepository.persist(item);
-        return true;
+        return itemConverter.getDTOFromObject(item);
     }
 
     @Override
@@ -131,6 +147,16 @@ public class ItemServiceImpl implements ItemService {
         basket.setUser(customerUser);
         basket.getOrderedItem().setUser(salerUser);
         basketRepository.persist(basket);
+    }
+
+    @Override
+    public ItemDTO updateItem(ItemDTO itemDTO) {
+        Item item = itemRepository.getItemByUUID(itemDTO.getUuid());
+        item.setName(itemDTO.getName());
+        item.setPrice(itemDTO.getPrice());
+        item.getItemDetails().setDescription(itemDTO.getItemDetails().getDescription());
+        ItemConverter itemConverter = converterFacade.getItemConverter();
+        return itemConverter.getDTOFromObject(item);
     }
 
 }

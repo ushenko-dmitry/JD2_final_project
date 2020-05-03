@@ -5,20 +5,22 @@
         <title>Basket</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Basket</div>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Basket</span></div>
         <form method="POST" th:action="@{/baskets/{id}/edit(id = ${basket.id})}" th:object="${basket}">
-            <table border="1">
+            <table class="tables tab_basket_edit">
                 <thead>
                     <tr>
-                        <td>Number</td>
-                        <td>Status</td>
-                        <td>Name</td>
-                        <td>Customer Id</td>
-                        <td>Customer Phone</td>
-                        <td>Amount</td>
-                        <td>Price</td>
+                        <td class="t_head center_align">Number</td>
+                        <td class="t_head center_align">Status</td>
+                        <td class="t_head center_align">Name</td>
+                        <td class="t_head center_align">Customer Id</td>
+                        <td class="t_head center_align">Customer Phone</td>
+                        <td class="t_head center_align">Amount</td>
+                        <td class="t_head center_align">Price</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,10 +42,14 @@
                         <td th:text="*{orderedItem.amount}">Amount</td>
                         <td th:text="*{orderedItem.price * orderedItem.amount}">Price</td>
                     </tr>
+                    <tr>
+                        <td colspan="7">
+                            <input type="submit" value="Save"/>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-            <input type="submit" value="Save"/>
         </form>
-        <p><a href="/baskets" th:href="@{/baskets}">Back</a></p>
+        <div class="back_btn"><a href="/baskets" th:href="@{/baskets}">Back</a></div>
     </body>
 </html>

@@ -4,39 +4,52 @@
         <title>Profile</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div>Profile</div>
-        <div th:object="${user_profile}">
-            <p>Name: 
-                <input type="text" placeholder="Name" th:value="*{name}" disabled=""/>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Profile</span></div>
+        <div class="profile" th:object="${user_profile}">
+            <p>Name</p>
+            <p><input type="text" placeholder="Name" th:value="*{name}" th:field="*{name}" disabled=""/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">pass error</span>
             </p>
-            <p>Surname: 
-                <input type="text" placeholder="Surname" th:value="*{surname}" disabled=""/>
+            <br/>
+            <p>Surname</p>
+            <p><input type="text" placeholder="Surname" th:value="*{surname}"  th:field="*{surname}" disabled=""/>
+                <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">pass error</span>
             </p>
-            <p>Address: 
-                <input type="text" placeholder="Address" th:value="*{address}" disabled=""/>
+            <br/>
+            <p>Address</p>
+            <p><input type="text"  placeholder="Address" th:value="*{address}"  th:field="*{address}" disabled=""/>
+                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">pass error</span>
             </p>
-            <p>Phone: 
-                <input type="text" placeholder="Phone" th:value="*{phone}" disabled=""/>
+            <br/>
+            <p>Phone</p>
+            <p><input type="text" placeholder="Phone" th:value="*{phone}"  th:field="*{phone}" disabled=""/>
+                <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">pass error</span>
             </p>
+            <br/>
             <form method="GET" th:action="@{/profile/edit}">
                 <input type="submit" value="Edit" />
             </form>
+        </div>
+        <div class="profile" th:object="${user_profile}">
             <form method="POST" th:action="@{/profile/change_password}" th:object="${new_password}">
                 <p>Password: 
                     <input type="text" placeholder="Password" th:field="*{password}"/>
                     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">pass error</span>
                 </p>
+                <br/>
                 <p>Confirm password: 
                     <input type="text" placeholder="Confirm password" th:field="*{passwordConfirm}"/>
                     <span th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">pass error</span>
                 </p>
+                <br/>
                 <input type="hidden" th:field="*{id}"/>
                 <input type="submit" value="Change password"/>
             </form>
         </div>
-        <p><a href="/" th:href="@{/}">Back</a></p>
+        <div class="back_btn"><a href="/" th:href="@{/}">Back</a></div>
     </body>
 </html>
