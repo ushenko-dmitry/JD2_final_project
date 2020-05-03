@@ -1,43 +1,27 @@
 package ru.mail.dimaushenko.webmodule.controller;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.jdbc.AutoConfigureDataJdbc;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import ru.mail.dimaushenko.webmodule.controller.config.TestSecurityConfig;
 
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@WebMvcTest(controllers = ArticleController.class)
-@AutoConfigureDataJdbc
-@Import(TestSecurityConfig.class)
-@TestPropertySource(value = "/application-test.properties")
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
-@Disabled
+@TestPropertySource(value = "/application-test.properties")
 public class ArticleControllerSecurityTest {
 
     private static final int MOVED_TEMPORARILY = 302;
 
-//    @Autowired
-//    private WebApplicationContext context;
     @Autowired
     private MockMvc mockMvc;
 
-//    @BeforeEach
-//    public void setup() {
-//        this.mockMvc = MockMvcBuilders
-//                .webAppContextSetup(context)
-//                .apply(springSecurity())
-//                .build();
-//    }
     @Test
     public void testGetArticles() throws Exception {
         mockMvc.perform(get("/articles").
