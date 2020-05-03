@@ -20,7 +20,7 @@
     </Appenders>
 
     <Loggers>
-        <Root level="ERROR">
+        <Root level="debug">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="rollingFile"/>
         </Root>
