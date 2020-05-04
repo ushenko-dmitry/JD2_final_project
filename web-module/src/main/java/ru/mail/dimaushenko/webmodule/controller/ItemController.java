@@ -89,7 +89,7 @@ public class ItemController {
     @PostMapping("/{uuid}/save")
     public String saveItem(
             @PathVariable(name = "uuid") String uuidSrt,
-            @Valid @ModelAttribute ItemDTO itemDTO,
+            @Valid @ModelAttribute(name = "item") ItemDTO itemDTO,
             BindingResult bindingResult,
             Model model
     ) {
@@ -98,7 +98,7 @@ public class ItemController {
             return "item_edit";
         }
         ItemDTO item = itemService.updateItem(itemDTO);
-        return "redirect:/items/{uuid}";
+        return "redirect:/items/" + item.getUuid().toString();
     }
 
     @PostMapping("/{uuid}/delete")
@@ -111,11 +111,14 @@ public class ItemController {
 
     @PostMapping("/{uuid}/buskets")
     public String addToBasket(
-            @Valid @ModelAttribute(name = "new_basket") AddBasketDTO addBusket,
             @PathVariable(name = "uuid") String uuidStr,
+            @Valid @ModelAttribute(name = "new_basket") AddBasketDTO addBusket,
             BindingResult bindingResult,
             Authentication authentication
     ) {
+        if (bindingResult.hasErrors()) {
+            return "item";
+        }
         ItemDTO item = itemService.getItem(UUID.fromString(uuidStr));
         addBusket.setItem(item);
         AppUser appUser = (AppUser) authentication.getPrincipal();

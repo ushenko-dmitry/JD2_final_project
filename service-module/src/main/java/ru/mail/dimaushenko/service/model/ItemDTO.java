@@ -5,16 +5,18 @@ import java.util.Objects;
 import java.util.UUID;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_SIZE_FROM_1_TO_255;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.PRICE_MIN;
 
 public class ItemDTO {
 
     private Long id;
     private UUID uuid;
     private UserDTO user;
-    @Size(min = 1, message = "the description must be from 1 to 255")
+    @Size(min = 1, max = 255, message = FIELD_SIZE_FROM_1_TO_255)
     private String name;
     private ItemDetailsDTO itemDetails;
-    @Min(value = 0, message = "the price cannot be less than zero")
+    @Min(value = 0, message = PRICE_MIN)
     private BigDecimal price;
 
     public Long getId() {

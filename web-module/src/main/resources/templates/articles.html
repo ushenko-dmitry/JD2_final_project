@@ -12,6 +12,11 @@
         <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
         <div class="title"><span>Articles</span></div>
 
+        <th:block th:if="${param.error}">
+            <br/>
+            <div class="title"><span>Error with delete article</span></div>
+        </th:block>
+        
         <table class="tables tab_articles" th:each="article : ${viewArticles.articles}">
             <thead>
                 <tr>

@@ -23,14 +23,30 @@
                 <tbody>
                     <tr>
                         <td th:text="*{uuid}">Number</td>
-                        <td><input type="text" th:field="*{name}"/></td>
-                        <td><input type="text" th:field="*{price}"/></td>
+                        <td>
+                            <input type="text" th:field="*{name}"/>
+                            <th:block th:if="${#fields.hasErrors('name')}">
+                                <span th:errors="*{name}">error</span><br/>
+                            </th:block>
+                        </td>
+                        <td>
+                            <input type="number" th:field="*{price}"/>
+                            <th:block th:if="${#fields.hasErrors('price')}">
+                                <br/><br/>
+                                <span th:errors="*{price}">error</span><br/>
+                            </th:block>
+                        </td>
                     </tr>
                     <tr>
                         <td class="t_head center_align" colspan="3">Description</td>
                     </tr>
                     <tr>
-                        <td colspan="3"><textarea style="width: 100%" th:field="*{itemDetails.description}"></textarea></td>
+                        <td colspan="3">
+                            <textarea style="width: 100%" th:field="*{itemDetails.description}"></textarea>
+                            <th:block th:if="${#fields.hasErrors('itemDetails.description')}">
+                                <span th:errors="*{itemDetails.description}">error</span><br/>
+                            </th:block>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="3"><input type="submit" value="Save"/></td>

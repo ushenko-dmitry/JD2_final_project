@@ -1,12 +1,13 @@
 package ru.mail.dimaushenko.service.model;
 
 import javax.validation.constraints.Size;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_IS_EMPTY;
 
 public class AddCommentDTO {
 
     private Long userId;
     private Long articleId;
-    @Size(min = 1)
+    @Size(min = 1, message = FIELD_IS_EMPTY)
     private String comment;
 
     public Long getUserId() {

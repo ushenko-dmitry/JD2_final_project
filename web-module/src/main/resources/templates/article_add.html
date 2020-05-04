@@ -12,9 +12,15 @@
         <form class="add_user_form" method="POST" action="/articles/add" th:action="@{/articles/add}" th:object="${newArticle}">
             <p>Title</p>
             <p><input type="text" name="title" th:field="*{title}"/></p>
+            <th:block th:if="${#fields.hasErrors('title')}">
+                <span th:errors="*{title}">error</span><br/>
+            </th:block>
             <br/>
             <p>Content</p>
             <p><textarea name="content" th:field="*{content}"></textarea></p>
+            <th:block th:if="${#fields.hasErrors('content')}">
+                <span th:errors="*{content}">error</span><br/>
+            </th:block>
             <br/>
             <p><input type="submit" value="Create"/></p>
         </form>

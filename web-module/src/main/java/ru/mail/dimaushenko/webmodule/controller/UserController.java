@@ -85,8 +85,7 @@ public class UserController {
 
     @PostMapping("/{id}/resetPassword")
     public String resetPassword(@PathVariable Long id, Model model) {
-        boolean isReset = userService.resetPassword(id);
-
+        userService.resetPassword(id);
         UserDTO user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "redirect:/users/" + id + "/update?reset=true";

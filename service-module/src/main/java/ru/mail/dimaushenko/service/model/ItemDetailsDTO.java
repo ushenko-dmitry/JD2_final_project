@@ -2,11 +2,12 @@ package ru.mail.dimaushenko.service.model;
 
 import java.util.Objects;
 import javax.validation.constraints.Size;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_SIZE_FROM_1_TO_200;
 
 public class ItemDetailsDTO {
 
     private Long itemId;
-    @Size(min = 1, max = 200, message = "the description must be from 1 to 200")
+    @Size(min = 1, max = 200, message = FIELD_SIZE_FROM_1_TO_200)
     private String description;
 
     public Long getItemId() {
