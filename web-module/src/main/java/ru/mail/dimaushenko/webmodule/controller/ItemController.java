@@ -139,16 +139,17 @@ public class ItemController {
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filename)));
                     stream.write(bytes);
                     stream.close();
-                    System.out.println("Вы удачно загрузили " + filename);
                     itemService.addItemFromFile(appUser.getUsername(), filename);
                 } catch (Exception e) {
-                    System.out.println("Вам не удалось загрузить " + file.getOriginalFilename() + " => " + e.getMessage());
+                    return "redirect:/items?error";
                 }
             } else {
-                System.out.println("Вам не удалось загрузить " + file.getOriginalFilename() + " потому что файл пустой.");
+                return "redirect:/items?empty_file";
             }
+        } else {
+            return "redirect:/items?file_format";
         }
-        return "redirect:/items";
+        return "redirect:/items?file_ok";
     }
 
     private PaginationDTO setPagination(PaginationDTO pagination) {
