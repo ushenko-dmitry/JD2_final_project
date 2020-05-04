@@ -11,7 +11,12 @@
     <body>
         <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
         <div class="title"><span>Article</span></div>
-
+        
+        <th:block th:if="${param.error}">
+            <br/>
+            <div class="title"><span>You cannot edit this article</span></div>
+        </th:block>
+        
         <table class="tables tab_article">
             <thead>
                 <tr>

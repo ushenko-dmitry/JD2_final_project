@@ -31,16 +31,6 @@
                     <tr>
                         <td colspan="3" th:text="${article.content}">Content</td> 
                     </tr>
-                    <tr th:if="${#authentication.name == article.user.email}">
-                        <td colspan="3">
-                            <form method="GET" th:action="@{/articles/{id}/edit(id=${article.id})}">
-                                <input type="submit" value="Edit" />
-                            </form>
-                            <form method="POST" th:action="@{/articles/{id}/delete(id=${article.id})}">
-                                <p><input type="submit" value="Delete"/></p>
-                            </form>
-                        </td>
-                    </tr>
                 </th:block>
             </tbody>
         </table>
@@ -62,8 +52,11 @@
                 </tr>
                 <tr sec:authorize="hasRole('CUSTOMER_USER')">
                     <td colspan="3">
-                        <form class="add_comment" method="POST" th:action="@{/articles/{id}/comments(id=${new_comment.articleId})}" th:object="${new_comment}">
+                        <form class="add_comment" method="POST" th:action="@{/articles/{id}/comments(id=${article.id})}" th:object="${new_comment}">
                             <textarea th:field="*{comment}"></textarea>
+                            <th:block th:if="${#fields.hasErrors('comment')}">
+                                <span th:errors="*{comment}">error</span><br/>
+                            </th:block>
                             <br/>
                             <input type="submit" value="Add"/>
                         </form>

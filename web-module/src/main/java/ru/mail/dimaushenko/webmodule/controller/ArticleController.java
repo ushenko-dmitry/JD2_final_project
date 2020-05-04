@@ -80,9 +80,13 @@ public class ArticleController {
     @PostMapping("/add")
     public String addArticle(
             @Valid @ModelAttribute(name = "newArticle") AddArticleDTO addArticle,
+            BindingResult bindingResult,
             Authentication authentication,
             Model model
     ) {
+        if (bindingResult.hasErrors()) {
+            return "article_add";
+        }
         AppUser appUser = (AppUser) authentication.getPrincipal();
         UserDTO user = userService.getUserByEmail(appUser.getUsername());
         addArticle.setUserId(user.getId());
@@ -99,9 +103,9 @@ public class ArticleController {
         ArticleDTO article = articleService.getArticle(id);
         if (article.getUser().getEmail().equals(appUser.getUsername())) {
             articleService.deleteArticle(id);
-            return "redirect:/articles?error";
+            return "redirect:/articles";
         }
-        return "redirect:/articles";
+        return "redirect:/articles?error";
     }
 
     @GetMapping("/{id}/edit")
@@ -116,7 +120,7 @@ public class ArticleController {
             model.addAttribute("article", article);
             return "article_edit";
         }
-        return "redirect:/articles/" + id;
+        return "redirect:/articles/" + id + "?error";
     }
 
     @PostMapping("/{id}/edit")
@@ -133,7 +137,7 @@ public class ArticleController {
         AppUser appUser = (AppUser) authentication.getPrincipal();
         ArticleDTO article = articleService.getArticle(id);
         if (article.getUser().getEmail().equals(appUser.getUsername())) {
-            Boolean isUpdate = articleService.updateArticle(articleDTO);
+            articleService.updateArticle(articleDTO);
             return "redirect:/articles/" + id;
         }
         model.addAttribute("article", article);
@@ -159,9 +163,7 @@ public class ArticleController {
             }
             if (isCommentContains) {
                 articleService.deleteComment(articleId, commentId);
-                return "redirect:/articles/" + articleId + "/edit";
             }
-            return "redirect:/articles/" + articleId + "/edit";
         }
         return "redirect:/articles/" + articleId + "/edit";
     }
@@ -188,6 +190,8 @@ public class ArticleController {
             Authentication authentication
     ) {
         if (bindingResult.hasErrors()) {
+            ArticleDTO article = articleService.getArticle(articleId);
+            model.addAttribute("article", article);
             return "comment_add";
         }
         AppUser appUser = (AppUser) authentication.getPrincipal();

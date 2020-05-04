@@ -2,25 +2,25 @@ package ru.mail.dimaushenko.service.model;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_SIZE_FROM_1_TO_20;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_SIZE_FROM_1_TO_40;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_SIZE_FROM_1_TO_50;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.ROLE_NOT_SELECT;
 
 public class AddUserDTO {
 
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = FIELD_SIZE_FROM_1_TO_50)
     private String email;
     private String password;
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20, message = FIELD_SIZE_FROM_1_TO_20)
     private String name;
-    @NotNull
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 40, message = FIELD_SIZE_FROM_1_TO_40)
     private String surname;
-    @NotNull
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 40, message = FIELD_SIZE_FROM_1_TO_40)
     private String patronymic;
-    @NotNull
+    @NotNull(message = ROLE_NOT_SELECT)
     private UserRoleEnumDTO role;
-    
+
     public String getEmail() {
         return email;
     }

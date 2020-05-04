@@ -87,7 +87,6 @@ public class BasketController {
         BasketDTO basket = basketService.getBasket(id);
         basket.setOrderStatus(updatedBasket.getOrderStatus());
         basketService.updateBasket(basket);
-
         return "redirect:/baskets/" + id;
     }
 

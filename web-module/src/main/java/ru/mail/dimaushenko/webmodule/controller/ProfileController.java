@@ -1,13 +1,10 @@
 package ru.mail.dimaushenko.webmodule.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,8 +44,8 @@ public class ProfileController {
     @PostMapping("/change_password")
     public String changePassword(
             @Valid @ModelAttribute(name = "new_password") UserPasswordDTO userPasswordDTO,
-            @ModelAttribute(name = "user_profile") UserProfileDTO userProfile,
             BindingResult bindingResult,
+            @ModelAttribute(name = "user_profile") UserProfileDTO userProfile,
             Model model
     ) {
         passwordValidator.validate(userPasswordDTO, bindingResult);
@@ -84,10 +81,6 @@ public class ProfileController {
             Model model
     ) {
         if (bindingResult.hasErrors()) {
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            for (ObjectError error : errors) {
-                FieldError fe = (FieldError) error;
-            }
             return "profile_edit";
         }
         boolean isUpdated = userService.updateUserDetails(userProfile);

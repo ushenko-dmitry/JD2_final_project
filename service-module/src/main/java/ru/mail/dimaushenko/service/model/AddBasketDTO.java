@@ -1,9 +1,15 @@
 package ru.mail.dimaushenko.service.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+import static ru.mail.dimaushenko.service.constants.ErrorMessage.FIELD_MIN_1;
+
 public class AddBasketDTO {
 
     private ItemDTO item;
     private UserDTO user;
+    @Min(value = 1, message = FIELD_MIN_1)
+    @Positive
     private Long amount;
 
     public ItemDTO getItem() {
