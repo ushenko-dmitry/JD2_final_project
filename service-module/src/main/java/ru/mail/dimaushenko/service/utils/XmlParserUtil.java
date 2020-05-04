@@ -13,7 +13,6 @@ public class XmlParserUtil {
         try {
             Serializer serializer = new Persister();
             File file = new File(filename);
-            System.out.println(file.isFile());
             ItemXmlDTOList itemXmlDTOList = serializer.read(ItemXmlDTOList.class, file);
             return itemXmlDTOList;
         } catch (Exception ex) {

@@ -24,7 +24,7 @@ public class BasketApiController {
     }
 
     @GetMapping("/{id}")
-    public BasketDTO getArticle(@PathVariable(name = "id") Long id) {
+    public BasketDTO getBasket(@PathVariable(name = "id") Long id) {
         return basketService.getBasket(id);
     }
 

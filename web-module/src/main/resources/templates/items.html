@@ -13,6 +13,23 @@
         <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
         <div class="title"><span>Items</span></div>
 
+        <th:block th:if="${param.error}">
+            <br/>
+            <div class="title"><span>Error with file</span></div>
+        </th:block>
+        <th:block th:if="${param.empty_file}">
+            <br/>
+            <div class="title"><span>File was empty</span></div>
+        </th:block>
+        <th:block th:if="${param.file_format}">
+            <br/>
+            <div class="title"><span>File has wrong format</span></div>
+        </th:block>
+        <th:block th:if="${param.file_ok}">
+            <br/>
+            <div class="title"><span>File is upload</span></div>
+        </th:block>
+        
         <table class="tables tab_items">
             <thead>
                 <tr>

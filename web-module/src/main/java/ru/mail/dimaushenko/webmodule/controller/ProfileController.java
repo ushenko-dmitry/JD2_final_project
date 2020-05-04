@@ -87,7 +87,6 @@ public class ProfileController {
             List<ObjectError> errors = bindingResult.getAllErrors();
             for (ObjectError error : errors) {
                 FieldError fe = (FieldError) error;
-                System.out.println("\nField" + fe.getField() + "\n" + fe.toString());
             }
             return "profile_edit";
         }

@@ -171,7 +171,6 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserPassword(UserPasswordDTO userPasswordDTO) {
         User user = userRepository.findById(userPasswordDTO.getId());
         String password = passwordEncoder.encode(userPasswordDTO.getPassword());
-        System.out.println(password);
         user.setPassword(password);
         return true;
     }
