@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Article</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Article</span></div>
+
+        <table class="tables tab_article">
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Title</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">Name Surname</td>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block>
+                    <tr>
+                        <td th:text="${article.title}">Title</td>
+                        <td th:text="${#dates.format(article.date, 'dd-MMM-yyyy HH:mm')}">Date</td>
+                        <td th:if="${article.user.userDetails}" th:text="${article.user.userDetails.surname + ' ' + article.user.userDetails.name}">Name Surname</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="t_head center_align">Content</td> 
+                    </tr>
+                    <tr>
+                        <td colspan="3" th:text="${article.content}">Content</td> 
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+
+        <table class="tables tab_article_comment">
+            <caption>Comments</caption>
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Name Surname</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">Comment</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comment : ${article.comments}">
+                    <td th:if="${comment.userDetails}" th:text="${comment.userDetails.surname + ' ' + comment.userDetails.name}">Name Surname</td>
+                    <td th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}">Date</td>
+                    <td th:text="${comment.comment}">Comment</td>
+                </tr>
+                <tr sec:authorize="hasRole('CUSTOMER_USER')">
+                    <td colspan="3">
+                        <form class="add_comment" method="POST" th:action="@{/articles/{id}/comments(id=${article.id})}" th:object="${new_comment}">
+                            <textarea th:field="*{comment}"></textarea>
+                            <th:block th:if="${#fields.hasErrors('comment')}">
+                                <span th:errors="*{comment}">error</span><br/>
+                            </th:block>
+                            <br/>
+                            <input type="submit" value="Add"/>
+                        </form>
+                        <a th:href="@{/articles/{id}(id=${article.id})}" href="#">Cancel</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</html>

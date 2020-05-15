@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>User add</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Add user</span></div>
+        <form class="add_user_form" method="POST" th:action="@{/users/add}" th:object="${new_user}">
+            <p>Surname</p>
+            <p><input type="text" name="surname" th:field="*{surname}"/></p>
+            <th:block th:if="${#fields.hasErrors('surname')}">
+                <span th:errors="*{surname}">error</span><br/>
+            </th:block>
+            <br/>
+            <p>Name</p>
+            <p><input type="text" name="name" th:field="*{name}"/></p>
+            <th:block th:if="${#fields.hasErrors('name')}">
+                <span th:errors="*{name}">error</span><br/>
+            </th:block>
+            <br/>
+            <p>Patronymic</p>
+            <p><input type="text" name="patronymic" th:field="*{patronymic}"/></p>
+            <th:block th:if="${#fields.hasErrors('patronymic')}">
+                <span th:errors="*{patronymic}">error</span><br/>
+            </th:block>
+            <br/>
+            <p>Email</p>
+            <p><input type="text" name="email" th:field="*{email}"/></p>
+            <th:block th:if="${#fields.hasErrors('email')}">
+                <span th:errors="*{email}">error</span><br/>
+            </th:block>
+            <br/>
+            <p>Role</p>
+            <p>
+                <select name="role" th:field="*{role}">
+                    <option value="ADMINISTRATOR">Administrator</option>
+                    <option value="SALE_USER">Sale User</option>
+                    <option value="CUSTOMER_USER">Customer User</option>
+                    <option value="SECURE_API_USER">Secure API User</option>
+                </select>
+            </p>
+            <br/>
+            <input type="submit" value="Add"/>
+        </form>
+        <div class="back_btn"><a href="/users" th:href="@{/users}">Back</a></div>
+    </body>
+</html>

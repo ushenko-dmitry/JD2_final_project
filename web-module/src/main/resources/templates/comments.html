@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Comments</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link th:href="@{/css/style.css}" href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <th:block th:insert="~{skeleton/menu :: menu}"></th:block>
+        <div class="title"><span>Comments</span></div>
+
+        <table class="tables tab_comments">
+            <thead>
+                <tr>
+                    <td class="t_head center_align">Full name</td>
+                    <td class="t_head center_align">Comment</td>
+                    <td class="t_head center_align">Date</td>
+                    <td class="t_head center_align">View</td>
+                    <td class="t_head center_align">Remove</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comment : ${viewComments.comments}">
+                    <td><span th:if="${comment.user.userDetails}" th:text="${comment.user.userDetails.surname + ' ' + comment.user.userDetails.name+ ' ' + comment.user.userDetails.patronymic}">Full name</span></td>
+                    <td th:text="${comment.comment}">Comment</td>
+                    <td th:text="${#dates.format(comment.creationDate, 'dd-MMM-yyyy HH:mm')}">Date</td>
+                    <td style="text-align: center"><input type="checkbox" th:checked="${comment.isVisible}" disabled=""/></td>
+                    <td>
+                        <form method="POST" th:action="@{/comments/{id}/delete(id=${comment.id})}">
+                            <input type="submit" value="remove"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.size(viewComments.pagination.pageNumbers)} > 1">
+                    <td colspan="5">
+                        <div class="pagination">
+                            <ul>
+                                <li th:each="pageNumber : ${viewComments.pagination.pageNumbers}"><a th:href="@{/comments(pagination.currentPage=*{pageNumber}, pagination.elementsPerPage=*{viewComments.pagination.elementsPerPage})}" th:text="${pageNumber}">1</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="back_btn"><a href="/" th:href="@{/}">Back</a></div>
+    </body>
+</html>
